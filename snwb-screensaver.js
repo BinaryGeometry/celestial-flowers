@@ -12,8 +12,6 @@
 //     return "i = " + i + " d = "+d;
 //   });
 
-// var circleRadii = [40, 20, 10];
-  function gardenTidily(container, plant){
     var user = [];
     user.domain = 'binarygeometry.co.uk';
     user.space = 'office';
@@ -25,9 +23,11 @@
           .append("svg")
           .attr("width", 500)
           .attr("height", 500);
-    
     var circles = svgContainer.selectAll("circle")
-          // .data(makeSacred(1, 'moon'))
+    
+// var circleRadii = [40, 20, 10];
+  var gardenTidily = function(container, soil, plant){
+    var circles = soil
           .data(makeSacred(1, plant))
           .enter()
           .append("circle");  
@@ -41,32 +41,31 @@
 
     var count = 1
     
-    setInterval(function(){
-      if (count < 10){
-     		count++;
-     	}
-     	else  {
-     		count--;
-     	}
-      console.log(container, count)
-      //rejoin data
-    	var circles = svgContainer.selectAll("circle")
-        .data(makeSacred(count, plant));
-      circles.exit().remove();//remove unneeded circles
-      circles.enter().append("circle")
-      // circles.transition().duration(300).append("circle")
-        .attr("cx", function(d){ return d.x; })
-        .attr("cy", function(d){ return d.y; })
-        .attr("r", 10+count)
-        .style("stroke", 'green') 
-        .style('fill', 'rgba(0, 0, 0, 0.4)')   		
-    }, 600)
+    // setInterval(function(){
+    //   if (count < 10){
+    //  		count++;
+    //  	}
+    //  	else  {
+    //  		count--;
+    //  	}
+    //   console.log(container, count)
+    //   //rejoin data
+    // 	var circles = svgContainer.selectAll("circle")
+    //     .data(makeSacred(count, plant));
+    //   circles.exit().remove();//remove unneeded circles
+    //   circles.enter().append("circle")
+    //   // circles.transition().duration(300).append("circle")
+    //     .attr("cx", function(d){ return d.x; })
+    //     .attr("cy", function(d){ return d.y; })
+    //     .attr("r", 10+count)
+    //     .style("stroke", 'green') 
+    //     .style('fill', 'rgba(0, 0, 0, 0.4)')   		
+    // }, 600)
 
   }
   
-  gardenTidily("#container", 'sun');
-  gardenTidily("#container", 'moon');
-  // gardenTidily("#container");
+  gardenTidily("#container", circles, 'sun');
+  // gardenTidily("#container", circles, 'moon');
 
   function plotHexagon(){
     var pythagorean_puzzle = (Math.sqrt(3)/2),
@@ -85,11 +84,14 @@
 
 function makeSacred(radius, celestialbody){
 
-  var sun = function() {
-	    var h = (Math.sqrt(3)/2),
+  var sun = function(location) {
+      
+      location = location || {x:150,y:250};
+      
+      var h = (Math.sqrt(3)/2),
       radius = 100,
-      xp = 150,
-      yp = 250,
+      xp = location.x, //150,
+      yp = location.y, //250,
       // hexagonData = [
       // { "x": radius+xp,   "y": yp}, 
       // { "x": radius/2+xp,  "y": radius*h+yp},
@@ -121,15 +123,18 @@ function makeSacred(radius, celestialbody){
       return plasma;
 
   }
-  var moon = function(){
+  var moon = function(location){
 
+    location = location || {x:150,y:250};
     
-     plasma = []; //[{"x": xp, "y": yp}]; /* Contains the substance to be passed to the view updater */
-
+    plasma = []; //[{"x": xp, "y": yp}]; /* Contains the substance to be passed to the view updater */
+    
 
     settings = {
-      startX: 250,
-      startY: 250,
+      // startX: 150,
+      // startY: 250,
+      startX: location.x,
+      startY: location.y,
       levels: radius,
       radius: 25
     }                    
