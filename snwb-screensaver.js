@@ -51,7 +51,7 @@
       console.log(container, count)
       //rejoin data
     	var circles = svgContainer.selectAll("circle")
-        .data(makeSacred(count, 'moon'));
+        .data(makeSacred(count, plant));
       circles.exit().remove();//remove unneeded circles
       circles.enter().append("circle")
       // circles.transition().duration(300).append("circle")
@@ -64,6 +64,7 @@
 
   }
   
+  gardenTidily("#container", 'sun');
   gardenTidily("#container", 'moon');
   // gardenTidily("#container");
 
@@ -117,6 +118,7 @@ function makeSacred(radius, celestialbody){
       for (var i = hexagonData.length - 1; i >= 0; i--) {
         plasma.push(hexagonData[i])
       }
+      return plasma;
 
   }
   var moon = function(){
