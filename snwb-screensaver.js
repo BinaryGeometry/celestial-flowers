@@ -13,59 +13,62 @@
 //   });
 
 // var circleRadii = [40, 20, 10];
-var user = 'office',
-    domain = 'binarygeometry.co.uk',
-    element = document.getElementById('email');
-
+  function gardenTidily(container, plant){
+    var user = [];
+    user.domain = 'binarygeometry.co.uk';
+    user.space = 'office';
+    
+    var element = document.getElementById('email');
     element.innerHTML = user + '@' + domain;
+    
+    var svgContainer = d3.select("#container")
+          .append("svg")
+          .attr("width", 500)
+          .attr("height", 500);
+    
+    var circles = svgContainer.selectAll("circle")
+          // .data(makeSacred(1, 'moon'))
+          .data(makeSacred(1, plant))
+          .enter()
+          .append("circle");  
+    
+    var circleAttributes = circles
+          .attr("cx", function(d){ return d.x; })
+          .attr("cy", function(d){ return d.y; })
+          .attr("r", 50)
+          .style("stroke", 'green') 
+          .style('fill', 'transparent')
 
-var svgContainer = d3.select("#container")
-					.append("svg")
-                    .attr("width", 500)
-                    .attr("height", 500);
+    var count = 1
+    
+    setInterval(function(){
+      if (count < 10){
+     		count++;
+     	}
+     	else  {
+     		count--;
+     	}
+      console.log(container, count)
+      //rejoin data
+    	var circles = svgContainer.selectAll("circle")
+        .data(makeSacred(count, 'moon'));
+      circles.exit().remove();//remove unneeded circles
+      circles.enter().append("circle")
+      // circles.transition().duration(300).append("circle")
+        .attr("cx", function(d){ return d.x; })
+        .attr("cy", function(d){ return d.y; })
+        .attr("r", 10+count)
+        .style("stroke", 'green') 
+        .style('fill', 'rgba(0, 0, 0, 0.4)')   		
+    }, 600)
 
+  }
+  
+  gardenTidily("#container", 'moon');
+  // gardenTidily("#container");
 
- var circles = svgContainer.selectAll("circle")
-                           .data(makeSacred(1))
-                           .enter()
-                          .append("circle");  
-
-
-var circleAttributes = circles
-       .attr("cx", function(d){ return d.x; })
-       .attr("cy", function(d){ return d.y; })
-       .attr("r", 50)
-       .style("stroke", 'green') 
-       .style('fill', 'transparent')
-
-       var count = 1
-
-       setInterval(function(){
-       		if (count < 10){
-
-       		count++;
-       		}
-       		else  {
-       			count--;
-       		}
-       		console.log(count)
-       		//rejoin data
-    		var circles = svgContainer.selectAll("circle")
-        			.data(makeSacred(count));
-circles.exit().remove();//remove unneeded circles
-    circles.enter().append("circle")
-    // circles.transition().duration(300).append("circle")
-        			 .attr("cx", function(d){ return d.x; })
-       .attr("cy", function(d){ return d.y; })
-       .attr("r", 10+count)
-       .style("stroke", 'green') 
-       .style('fill', 'rgba(0, 0, 0, 0.4)')
-
-       		
-       }, 600)
-
-
-var h = (Math.sqrt(3)/2),
+  function plotHexagon(){
+    var pythagorean_puzzle = (Math.sqrt(3)/2),
     radius = 100,
     xp = 250,
     yp = 150,
@@ -77,123 +80,132 @@ var h = (Math.sqrt(3)/2),
       { "x": -radius/2+xp,  "y": -radius*h+yp},
       { "x": radius/2+xp, "y": -radius*h+yp}
     ];
+  }
 
+function makeSacred(radius, celestialbody){
 
-
-function makeSacred(radius){
-
-	var h = (Math.sqrt(3)/2),
-    radius = 100,
-    xp = 150,
-    yp = 250,
-
-    hexagonData = [
+  var sun = function() {
+	    var h = (Math.sqrt(3)/2),
+      radius = 100,
+      xp = 150,
+      yp = 250,
+      // hexagonData = [
+      // { "x": radius+xp,   "y": yp}, 
+      // { "x": radius/2+xp,  "y": radius*h+yp},
+      // { "x": -radius/2+xp,  "y": radius*h+yp},
+      // { "x": -radius+xp,  "y": yp},
+      // { "x": -radius/2+xp,  "y": -radius*h+yp},
+      // { "x": radius/2+xp, "y": -radius*h+yp},
+      // ]
+      hexagonData = [
       { "x": radius+xp,   "y": yp}, 
       { "x": radius/2+xp,  "y": radius*h+yp},
       { "x": -radius/2+xp,  "y": radius*h+yp},
       { "x": -radius+xp,  "y": yp},
       { "x": -radius/2+xp,  "y": -radius*h+yp},
       { "x": radius/2+xp, "y": -radius*h+yp},
-    ]
-
-    hexagonData = [
-      { "x": radius+xp,   "y": yp}, 
-      { "x": radius/2+xp,  "y": radius*h+yp},
-      { "x": -radius/2+xp,  "y": radius*h+yp},
-      { "x": -radius+xp,  "y": yp},
-      { "x": -radius/2+xp,  "y": -radius*h+yp},
-      { "x": radius/2+xp, "y": -radius*h+yp},
-
       { "x": (radius/2)+xp,   "y": yp}, 
       { "x": (radius/2)/2+xp,  "y": (radius/2)*h+yp},
       { "x": -(radius/2)/2+xp,  "y": (radius/2)*h+yp},
       { "x": -(radius/2)+xp,  "y": yp},
       { "x": -(radius/2)/2+xp,  "y": -(radius/2)*h+yp},
       { "x": (radius/2)/2+xp, "y": -(radius/2)*h+yp},
+      ],
+      plasma = []; //[{"x": xp, "y": yp}]; /* Contains the substance to be passed to the view updater */
+
+      // this be the https://codepen.io/MarcBT/pen/wcLCe/ method
+      for (var i = hexagonData.length - 1; i >= 0; i--) {
+        plasma.push(hexagonData[i])
+      }
+
+  }
+  var moon = function(){
+
     
-  	  { "x": ((radius/2)+radius)+xp,   "y": yp}, 
-      { "x": ((radius/2)+radius)/2+xp,  "y": ((radius/2)+radius)*h+yp},
-      { "x": -((radius/2)+radius)/2+xp,  "y": ((radius/2)+radius)*h+yp},
-      { "x": -((radius/2)+radius)+xp,  "y": yp},
-      { "x": -((radius/2)+radius)/2+xp,  "y": -((radius/2)+radius)*h+yp},
-      { "x": ((radius/2)+radius)/2+xp, "y": -((radius/2)+radius)*h+yp}
+     plasma = []; //[{"x": xp, "y": yp}]; /* Contains the substance to be passed to the view updater */
+
+
+    settings = {
+      startX: 250,
+      startY: 250,
+      levels: radius,
+      radius: 25
+    }                    
+
+
     
-    ];
+    // endth here the variable declarations
+    // this be mine, I think it's pretty readable if you can get past the pirate thing
+    for (i = 0; i < settings.levels; i++) { 
+      radialOffset = (settings.radius * (i +1));
 
-
-
-	var needleDrop = [{"x": xp, "y": yp}];
-    for (var i = hexagonData.length - 1; i >= 0; i--) {
-    	needleDrop.push(hexagonData[i])
+      if (i == 0){
+        plasma.push(plotCenter());
+      }
     }
 
-
-    return needleDrop;
-
-	// var settings = {
-	// 	startX: 250,
-	// 	startY: 250,
-	// 	levels: radius,
-	// 	radius: 25
-	// }                    
+    plasma.push(plotA(radialOffset));
+    plasma.push(plotB(radialOffset));
+    plasma.push(plotC(radialOffset));
+    plasma.push(plotD(radialOffset));
+    plasma.push(plotE(radialOffset));
+    plasma.push(plotF(radialOffset));
 
 
-	// for (i = 0; i < settings.levels; i++) { 
-	// 	if (i == 0){
-	// 		needleDrop.push(plotCenter());
-	// 	}
-	// 	radialOffset = (settings.radius * (i +1));
-	// 	needleDrop.push(plotA(radialOffset));
-	// 	needleDrop.push(plotB(radialOffset));
-	// 	needleDrop.push(plotC(radialOffset));
-	// 	needleDrop.push(plotD(radialOffset));
-	// 	needleDrop.push(plotE(radialOffset));
-	// 	needleDrop.push(plotF(radialOffset));
-	// }
-	// return needleDrop;
+     return plasma;
+  }
 
-	// function plotCenter(){
-	// 	var plot = {};
-	// 	plot.x = settings.startX;
-	// 	plot.y = settings.startY;
-	// 	return plot;
-	// }
-	// function plotA(radius){
-	// 	var plot = {};
-	// 	plot.x = settings.startX + (radius * Math.sin(60));
-	// 	plot.y = settings.startY + (radius * Math.cos(60));
-	// 	return plot;
-	// }
-	// function plotB(radius){
-	// 	var plot = {};
-	// 	plot.x = settings.startX + radius;
-	// 	plot.y = settings.startY;
-	// 	return plot;
-	// }
-	// function plotC(radius){
-	// 	var plot = {};
-	// 	plot.x = settings.startX + (radius * Math.sin(60));
-	// 	plot.y = settings.startY -(radius * Math.cos(60));
-	// 	return plot;
-	// }
-	// function plotD(radius){
-	// 	var plot = {};
-	// 	plot.x = settings.startX - (radius * Math.sin(60));
-	// 	plot.y = settings.startY -(radius * Math.cos(60));
-	// 	return plot;
-	// }
-	// function plotE(radius){
-	// 	var plot = {};
-	// 	plot.x = settings.startX - (radius);
-	// 	plot.y = settings.startY;
-	// 	return plot;
-	// }
-	// function plotF(radius){
-	// 	var plot = {};
-	// 	plot.x = settings.startX - (radius * Math.sin(60));
-	// 	plot.y = settings.startY + (radius * Math.cos(60));
-	// 	return plot;
-	// }
+  if(celestialbody == 'moon'){
+    return moon;
+  }
+
+  if(celestialbody == 'sun'){
+    return sun;
+  }
+
+
+  function plotCenter(){
+    var plot = {};
+    plot.x = settings.startX;
+    plot.y = settings.startY;
+    return plot;
+  }
+	function plotA(radius){
+		var plot = {};
+		plot.x = settings.startX + (radius * Math.sin(60));
+		plot.y = settings.startY + (radius * Math.cos(60));
+		return plot;
+	}
+	function plotB(radius){
+		var plot = {};
+		plot.x = settings.startX + radius;
+		plot.y = settings.startY;
+		return plot;
+	}
+	function plotC(radius){
+		var plot = {};
+		plot.x = settings.startX + (radius * Math.sin(60));
+		plot.y = settings.startY -(radius * Math.cos(60));
+		return plot;
+	}
+	function plotD(radius){
+		var plot = {};
+		plot.x = settings.startX - (radius * Math.sin(60));
+		plot.y = settings.startY -(radius * Math.cos(60));
+		return plot;
+	}
+	function plotE(radius){
+		var plot = {};
+		plot.x = settings.startX - (radius);
+		plot.y = settings.startY;
+		return plot;
+	}
+	function plotF(radius){
+		var plot = {};
+		plot.x = settings.startX - (radius * Math.sin(60));
+		plot.y = settings.startY + (radius * Math.cos(60));
+		return plot;
+	}
 }
 
 // makeSacred();
