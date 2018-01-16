@@ -36,7 +36,7 @@ function surveyPlot(width, height, startX, startY, spacing){
       // at each planting location along the pass we make a measurement
       for (var p = movesAlongX / 2; p >= 0; p--){
 
-        plantingMachinePath.push( {"x": machinePositionX, "y":machinePositionY, "radius":spacing, color:"tomato"} ) 
+        plantingMachinePath.push( {"x_axis": machinePositionX, "y_axis":machinePositionY, "radius":spacing, color:"tomato"} ) 
 
         machinePositionX = machinePositionX + (spacing * 2);
       
@@ -59,23 +59,32 @@ function surveyPlot(width, height, startX, startY, spacing){
 var plantingMachineInstructions = new surveyPlot(1200, 500, 0, 0, 50);
 
 console.log(plantingMachineInstructions)
-var jsonCircles = [
-   { "x_axis": 0, "y_axis": 0, "radius": 50, "color" : "brown" },
-   { "x_axis": 0, "y_axis": 100, "radius": 50, "color" : "brown"},
-   { "x_axis": 100, "y_axis": 0, "radius": 50, "color" : "green"},
-   { "x_axis": 100, "y_axis": 100, "radius": 50, "color" : "green"},
-   { "x_axis": 200, "y_axis": 0, "radius": 50, "color" : "brown"},
-   { "x_axis": 200, "y_axis": 100, "radius": 50, "color" : "brown"}
+// var jsonCircles = [
+//    { "x_axis": 0, "y_axis": 0, "radius": 50, "color" : "brown" },
+//    { "x_axis": 0, "y_axis": 100, "radius": 50, "color" : "brown"},
+//    { "x_axis": 100, "y_axis": 0, "radius": 50, "color" : "green"},
+//    { "x_axis": 100, "y_axis": 100, "radius": 50, "color" : "green"},
+//    { "x_axis": 200, "y_axis": 0, "radius": 50, "color" : "brown"},
+//    { "x_axis": 200, "y_axis": 100, "radius": 50, "color" : "brown"}
 
-];
+// ];
+
+ 
+// var pl = makeSacred.go(50)
+// console.log('dfd', pl)
+
+// var foo = plantingMachineInstructions.concat()
+ // console.log('dfd', foo)
  
 var svgContainer = d3.select("#container").append("svg")
-                                     .attr("width", 200)
-                                     .attr("height", 200);
+                                     .attr("width", 1200)
+                                     .attr("height", 500);
  
 var circles = svgContainer.selectAll("circle")
-                          .data(plantSeeds(0,0,50,'green'))
+                          // .data(plantSeeds(0,0,50,'green'))
                           // .data(jsonCircles)
+                          // .data(foo)
+                          // .data(makeSacred(50, 'sun'))
                           .data(plantingMachineInstructions)
                           .enter()
                           .append("circle");
@@ -186,9 +195,9 @@ console.log(circleAttributes);
     ];
   }
 
-function makeSacred(radius, celestialbody){
+function makeSacred(radius){
 
-  var sun = function(location) {
+  this.sun = function(location) {
       
       location = location || {x:150,y:250};
       
@@ -205,18 +214,18 @@ function makeSacred(radius, celestialbody){
       // { "x": radius/2+xp, "y": -radius*h+yp},
       // ]
       hexagonData = [
-      { "x": radius+xp,   "y": yp}, 
-      { "x": radius/2+xp,  "y": radius*h+yp},
-      { "x": -radius/2+xp,  "y": radius*h+yp},
-      { "x": -radius+xp,  "y": yp},
-      { "x": -radius/2+xp,  "y": -radius*h+yp},
-      { "x": radius/2+xp, "y": -radius*h+yp},
-      { "x": (radius/2)+xp,   "y": yp}, 
-      { "x": (radius/2)/2+xp,  "y": (radius/2)*h+yp},
-      { "x": -(radius/2)/2+xp,  "y": (radius/2)*h+yp},
-      { "x": -(radius/2)+xp,  "y": yp},
-      { "x": -(radius/2)/2+xp,  "y": -(radius/2)*h+yp},
-      { "x": (radius/2)/2+xp, "y": -(radius/2)*h+yp},
+      { "x_axis": radius+xp,   "y_axis": yp, radius:50, "color": "green"}, 
+      { "x_axis": radius/2+xp,  "y_axis": radius*h+yp, radius:50, "color": "green"},
+      { "x_axis": -radius/2+xp,  "y_axis": radius*h+yp, radius:50, "color": "green"},
+      { "x_axis": -radius+xp,  "y_axis": yp, radius:50, "color": "green"},
+      { "x_axis": -radius/2+xp,  "y_axis": -radius*h+yp, radius:50, "color": "green"},
+      { "x_axis": radius/2+xp, "y_axis": -radius*h+yp, radius:50, "color": "green"},
+      { "x_axis": (radius/2)+xp,   "y_axis": yp, radius:50, "color": "green"}, 
+      { "x_axis": (radius/2)/2+xp,  "y_axis": (radius/2)*h+yp, radius:50, "color": "green"},
+      { "x_axis": -(radius/2)/2+xp,  "y_axis": (radius/2)*h+yp, radius:50, "color": "green"},
+      { "x_axis": -(radius/2)+xp,  "y_axis": yp, radius:50, "color": "green"},
+      { "x_axis": -(radius/2)/2+xp,  "y_axis": -(radius/2)*h+yp, radius:50, "color": "green"},
+      { "x_axis": (radius/2)/2+xp, "y_axis": -(radius/2)*h+yp, radius:50, "color": "green"},
       ],
       plasma = []; //[{"x": xp, "y": yp}]; /* Contains the substance to be passed to the view updater */
 
@@ -267,11 +276,12 @@ function makeSacred(radius, celestialbody){
   }
 
   if(celestialbody == 'moon'){
-    return moon;
+    return 
+      moon;
   }
 
   if(celestialbody == 'sun'){
-    return sun;
+    return {go: this.sun }
   }
 
 
