@@ -1,45 +1,147 @@
-// console.log('hello')
+var plantSeeds = function(startX, startY, spacing, color){
+  
+  // var jsonCircles = [];
+  
+  var seedMap = [
+    { "x_axis": startX, "y_axis": startX, "radius": spacing, "color" : "brown" },
+    { "x_axis": startX, "y_axis": (spacing * 2), "radius": spacing, "color" : "brown"},
+    { "x_axis": (spacing * 2), "y_axis": 0, "radius": spacing, "color" : "green"},
+    { "x_axis": (spacing * 2), "y_axis": (spacing * 2), "radius": spacing, "color" : "green"},
+    { "x_axis": (spacing * 4), "y_axis": 0, "radius": spacing, "color" : "brown"},
+    { "x_axis": (spacing * 4), "y_axis": (spacing * 2), "radius": spacing, "color" : "brown"}
+  ];
 
-// d3.select("body").append("svg").attr("width", 50).attr("height", 50).append("circle").attr("cx", 25).attr("cy", 25).attr("r", 25).style("fill", "purple");
+  return seedMap;
+}
 
-// var theData = [ 1, 2, 3 ]
+function surveyPlot(width, height, startX, startY, spacing){
 
-// var p = d3.select("body").selectAll("p")
-//   .data(theData)
-//   .enter()
-//   .append("p")
-//   .text(function (d,i) {
-//     return "i = " + i + " d = "+d;
-//   });
+    var movesAlongX = ( Math.ceil( width / spacing ) );
+    console.log('movesAlongX', movesAlongX)
+    var movesAlongY = ( Math.ceil( height / spacing ) );
+    console.log('movesAlongY', movesAlongY)
 
-    var user = [];
-    user.domain = 'binarygeometry.co.uk';
-    user.space = 'office';
+    var plantingMachinePath = [];
     
-    var element = document.getElementById('email');
-    element.innerHTML = user + '@' + domain;
+    var machineStartX = startX;
+    var machineStartY = startY;
+        
+    var machinePositionX = machineStartX;
+    var machinePositionY = machineStartY;
+
+    // we need to know how many passes of the field the machine makes
+    for (var i = movesAlongX / 2; i >= 0; i--) {
+
+            
+      // at each planting location along the pass we make a measurement
+      for (var p = movesAlongX / 2; p >= 0; p--){
+
+        plantingMachinePath.push( {"x": machinePositionX, "y":machinePositionY, "radius":spacing, color:"tomato"} ) 
+
+        machinePositionX = machinePositionX + (spacing * 2);
+      
+      }
+
+      // at the end we reset the y co-ordinate
+      machinePositionX = 0;
+
+      // move the machine along the row to the next pass
+      machinePositionY = machinePositionY + (spacing * 2);
+
+    }
     
-    var svgContainer = d3.select("#container")
-          .append("svg")
-          .attr("width", 500)
-          .attr("height", 500);
-    var circles = svgContainer.selectAll("circle")
+    console.log('plantingMachinePath', plantingMachinePath)
+    return plantingMachinePath;
+
+}
+
+// surveyPlot(1200, 500, 0, 0, 50);
+var plantingMachineInstructions = new surveyPlot(1200, 500, 0, 0, 50);
+
+console.log(plantingMachineInstructions)
+var jsonCircles = [
+   { "x_axis": 0, "y_axis": 0, "radius": 50, "color" : "brown" },
+   { "x_axis": 0, "y_axis": 100, "radius": 50, "color" : "brown"},
+   { "x_axis": 100, "y_axis": 0, "radius": 50, "color" : "green"},
+   { "x_axis": 100, "y_axis": 100, "radius": 50, "color" : "green"},
+   { "x_axis": 200, "y_axis": 0, "radius": 50, "color" : "brown"},
+   { "x_axis": 200, "y_axis": 100, "radius": 50, "color" : "brown"}
+
+];
+ 
+var svgContainer = d3.select("#container").append("svg")
+                                     .attr("width", 200)
+                                     .attr("height", 200);
+ 
+var circles = svgContainer.selectAll("circle")
+                          .data(plantSeeds(0,0,50,'green'))
+                          // .data(jsonCircles)
+                          .data(plantingMachineInstructions)
+                          .enter()
+                          .append("circle");
+
+var circleAttributes = circles
+                       .attr("cx", function (d) { return d.x_axis; })
+                       .attr("cy", function (d) { return d.y_axis; })
+                       .attr("r", function (d) { return d.radius; })
+                       .style("stroke", function(d) { return d.color; })
+                       .style("fill", function(d) { return 'transparent'; });
+
+console.log(circleAttributes);
+
+
+
+
+
+  var plough = function(container){
+    var svgContainer = d3.select(container)
+    var width = svgContainer.node().getBoundingClientRect().width;
+    var height = svgContainer.node().getBoundingClientRect().height;
     
-// var circleRadii = [40, 20, 10];
-  var gardenTidily = function(container, soil, plant){
-    var circles = soil
+    console.log(width, height);
+
+    var circleRadii = [40, 20, 10];
+    
+    svgContainer.append("svg")
+      .attr("width", width)
+      .attr("height", height);
+      field.selectAll("circle")
+          // .data(circleRadii)        
           .data(makeSacred(1, plant))
           .enter()
-          .append("circle");  
+          .append("circle")
+          console.log(circles)
+    
+    // return svgContainer;
+  }
+
+  // var svgContainer = d3.select("#container")
+  //       .append("svg")
+  //       .attr("width", 500)
+  //       .attr("height", 500);
+    
+  // var circleRadii = [40, 20, 10];
+  
+  var gardenTidily = function(container, field, plant){
+
+    // var circleRadii = [40, 20, 10];
+
+    var circles = field.selectAll("circle")
+    
+          // .data(circleRadii)        
+          .data(makeSacred(1, plant))
+          .enter()
+          .append("circle")
+          console.log(circles)
     
     var circleAttributes = circles
           .attr("cx", function(d){ return d.x; })
           .attr("cy", function(d){ return d.y; })
           .attr("r", 50)
           .style("stroke", 'green') 
-          .style('fill', 'transparent')
+          // .style('fill', 'transparent')
 
-    var count = 1
+    var count = 1;
     
     // setInterval(function(){
     //   if (count < 10){
@@ -64,8 +166,10 @@
 
   }
   
-  gardenTidily("#container", circles, 'sun');
-  // gardenTidily("#container", circles, 'moon');
+  // var field = plough('#container');
+  // console.log(field);
+  // gardenTidily("#container", field, 'sun');
+  // gardenTidily("#container", field, 'moon');
 
   function plotHexagon(){
     var pythagorean_puzzle = (Math.sqrt(3)/2),

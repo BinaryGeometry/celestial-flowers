@@ -53,7 +53,7 @@ class SNWB_Screensaver extends WP_Widget {
         ?>
         <!-- <img src="<?php //echo $opts['snwb_blog_welcome_image'];?>"/> -->
         <section class="snwb-widget snwb-screensaver">
-            <main id="container" style="width:100%;max-width:500px;margin:0 auto;border:1px solid #f7f4f0;">
+            <main id="container" style="width:100%; border:1px solid #f7f4f0; height:500px;">
 
 			</main>
         </section>
