@@ -1,3 +1,132 @@
+function makeSacred(){
+
+  this.sun = function(location) {
+      
+      location = location || {x:150,y:250};
+      
+      var h = (Math.sqrt(3)/2),
+      radius = 100,
+      xp = location.x, //150,
+      yp = location.y, //250,
+      // hexagonData = [
+      // { "x": radius+xp,   "y": yp}, 
+      // { "x": radius/2+xp,  "y": radius*h+yp},
+      // { "x": -radius/2+xp,  "y": radius*h+yp},
+      // { "x": -radius+xp,  "y": yp},
+      // { "x": -radius/2+xp,  "y": -radius*h+yp},
+      // { "x": radius/2+xp, "y": -radius*h+yp},
+      // ]
+      hexagonData = [
+      { "x_axis": radius+xp,   "y_axis": yp, radius:50, "color": "green"}, 
+      { "x_axis": radius/2+xp,  "y_axis": radius*h+yp, radius:50, "color": "green"},
+      { "x_axis": -radius/2+xp,  "y_axis": radius*h+yp, radius:50, "color": "green"},
+      { "x_axis": -radius+xp,  "y_axis": yp, radius:50, "color": "green"},
+      { "x_axis": -radius/2+xp,  "y_axis": -radius*h+yp, radius:50, "color": "green"},
+      { "x_axis": radius/2+xp, "y_axis": -radius*h+yp, radius:50, "color": "green"},
+      { "x_axis": (radius/2)+xp,   "y_axis": yp, radius:50, "color": "green"}, 
+      { "x_axis": (radius/2)/2+xp,  "y_axis": (radius/2)*h+yp, radius:50, "color": "green"},
+      { "x_axis": -(radius/2)/2+xp,  "y_axis": (radius/2)*h+yp, radius:50, "color": "green"},
+      { "x_axis": -(radius/2)+xp,  "y_axis": yp, radius:50, "color": "green"},
+      { "x_axis": -(radius/2)/2+xp,  "y_axis": -(radius/2)*h+yp, radius:50, "color": "green"},
+      { "x_axis": (radius/2)/2+xp, "y_axis": -(radius/2)*h+yp, radius:50, "color": "green"},
+      ],
+      plasma = []; //[{"x": xp, "y": yp}]; /* Contains the substance to be passed to the view updater */
+
+      // this be the https://codepen.io/MarcBT/pen/wcLCe/ method
+      for (var i = hexagonData.length - 1; i >= 0; i--) {
+        plasma.push(hexagonData[i])
+      }
+      return plasma;
+
+  }
+  this.moon = function(location){
+
+    location = location || {x:150,y:250};
+    
+    plasma = []; //[{"x": xp, "y": yp}]; /* Contains the substance to be passed to the view updater */
+    
+    settings = {
+      // startX: 150,
+      // startY: 250,
+      startX: location.x,
+      startY: location.y,
+      levels: radius,
+      radius: 25
+    }                    
+  
+    // endth here the variable declarations
+    // this be mine, I think it's pretty readable if you can get past the pirate thing
+    for (i = 0; i < settings.levels; i++) { 
+      radialOffset = (settings.radius * (i +1));
+
+      if (i == 0){
+        plasma.push(plotCenter());
+      }
+    }
+
+    plasma.push(plotA(radialOffset));
+    plasma.push(plotB(radialOffset));
+    plasma.push(plotC(radialOffset));
+    plasma.push(plotD(radialOffset));
+    plasma.push(plotE(radialOffset));
+    plasma.push(plotF(radialOffset));
+
+     return plasma;
+  }
+
+  return {
+    sun: this.sun, 
+    moon: this.moon ,
+    flower: this.flower
+  };
+
+
+  function plotCenter(){
+    var plot = {};
+    plot.x = settings.startX;
+    plot.y = settings.startY;
+    return plot;
+  }
+  function plotA(radius){
+    var plot = {};
+    plot.x = settings.startX + (radius * Math.sin(60));
+    plot.y = settings.startY + (radius * Math.cos(60));
+    return plot;
+  }
+  function plotB(radius){
+    var plot = {};
+    plot.x = settings.startX + radius;
+    plot.y = settings.startY;
+    return plot;
+  }
+  function plotC(radius){
+    var plot = {};
+    plot.x = settings.startX + (radius * Math.sin(60));
+    plot.y = settings.startY -(radius * Math.cos(60));
+    return plot;
+  }
+  function plotD(radius){
+    var plot = {};
+    plot.x = settings.startX - (radius * Math.sin(60));
+    plot.y = settings.startY -(radius * Math.cos(60));
+    return plot;
+  }
+  function plotE(radius){
+    var plot = {};
+    plot.x = settings.startX - (radius);
+    plot.y = settings.startY;
+    return plot;
+  }
+  function plotF(radius){
+    var plot = {};
+    plot.x = settings.startX - (radius * Math.sin(60));
+    plot.y = settings.startY + (radius * Math.cos(60));
+    return plot;
+  }
+}
+
+
+console.log(makeSacred.flower)
 // var jsonCircles = [
 //    { "x_axis": 0, "y_axis": 0, "radius": 50, "color" : "brown" },
 //    { "x_axis": 0, "y_axis": 100, "radius": 50, "color" : "brown"},
@@ -69,7 +198,24 @@ var Survey = new surveyPlot(1200, 500, 0, 0, 50)
 // console.log(plantingMachineInstructions)
 
 
- 
+/**/
+// takes a node and returns a fan planting pattern
+var flower = function(data){
+  var roots = data;
+  roots.color = 'green';
+  console.log('anything', roots)
+  return roots;
+}
+
+var wateringPlan = []
+for (var i = Survey.plantingMachinePath.length - 1; i >= 0; i--) {
+  console.log('here', Survey.plantingMachinePath[i]);
+  wateringPlan.push(flower(Survey.plantingMachinePath[i]))
+
+}
+Survey.plantingMachinePath = wateringPlan;
+/**/
+
   var svgContainer = d3.select("#container").append("svg")
                                      .attr("width", 1200)
                                      .attr("height", 500);
@@ -90,10 +236,8 @@ var Survey = new surveyPlot(1200, 500, 0, 0, 50)
                        .style("stroke", function(d) { return d.color; })
                        .style("fill", function(d) { return 'transparent'; });
 
-  console.log(circleAttributes);
 
-  setInterval(function(){
-
+  // setInterval(function(){
     // var circles.data(makeSacred(count));
         // circles.exit().remove();//remove unneeded circles
         // circles.transition().duration(300).append("circle")
@@ -103,9 +247,7 @@ var Survey = new surveyPlot(1200, 500, 0, 0, 50)
         //                  .attr("r", 10+count)
         //                  .style("stroke", 'green') 
         //                  .style('fill', 'rgba(0, 0, 0, 0.4)')
-
-                          
-  }, 600)
+  // }, 600)
 
   // var plough = function(container){
   //   var svgContainer = d3.select(container)
@@ -199,131 +341,6 @@ var Survey = new surveyPlot(1200, 500, 0, 0, 50)
 //   ];
 // }
 
-function makeSacred(radius){
-
-  this.sun = function(location) {
-      
-      location = location || {x:150,y:250};
-      
-      var h = (Math.sqrt(3)/2),
-      radius = 100,
-      xp = location.x, //150,
-      yp = location.y, //250,
-      // hexagonData = [
-      // { "x": radius+xp,   "y": yp}, 
-      // { "x": radius/2+xp,  "y": radius*h+yp},
-      // { "x": -radius/2+xp,  "y": radius*h+yp},
-      // { "x": -radius+xp,  "y": yp},
-      // { "x": -radius/2+xp,  "y": -radius*h+yp},
-      // { "x": radius/2+xp, "y": -radius*h+yp},
-      // ]
-      hexagonData = [
-      { "x_axis": radius+xp,   "y_axis": yp, radius:50, "color": "green"}, 
-      { "x_axis": radius/2+xp,  "y_axis": radius*h+yp, radius:50, "color": "green"},
-      { "x_axis": -radius/2+xp,  "y_axis": radius*h+yp, radius:50, "color": "green"},
-      { "x_axis": -radius+xp,  "y_axis": yp, radius:50, "color": "green"},
-      { "x_axis": -radius/2+xp,  "y_axis": -radius*h+yp, radius:50, "color": "green"},
-      { "x_axis": radius/2+xp, "y_axis": -radius*h+yp, radius:50, "color": "green"},
-      { "x_axis": (radius/2)+xp,   "y_axis": yp, radius:50, "color": "green"}, 
-      { "x_axis": (radius/2)/2+xp,  "y_axis": (radius/2)*h+yp, radius:50, "color": "green"},
-      { "x_axis": -(radius/2)/2+xp,  "y_axis": (radius/2)*h+yp, radius:50, "color": "green"},
-      { "x_axis": -(radius/2)+xp,  "y_axis": yp, radius:50, "color": "green"},
-      { "x_axis": -(radius/2)/2+xp,  "y_axis": -(radius/2)*h+yp, radius:50, "color": "green"},
-      { "x_axis": (radius/2)/2+xp, "y_axis": -(radius/2)*h+yp, radius:50, "color": "green"},
-      ],
-      plasma = []; //[{"x": xp, "y": yp}]; /* Contains the substance to be passed to the view updater */
-
-      // this be the https://codepen.io/MarcBT/pen/wcLCe/ method
-      for (var i = hexagonData.length - 1; i >= 0; i--) {
-        plasma.push(hexagonData[i])
-      }
-      return plasma;
-
-  }
-  this.moon = function(location){
-
-    location = location || {x:150,y:250};
-    
-    plasma = []; //[{"x": xp, "y": yp}]; /* Contains the substance to be passed to the view updater */
-    
-    settings = {
-      // startX: 150,
-      // startY: 250,
-      startX: location.x,
-      startY: location.y,
-      levels: radius,
-      radius: 25
-    }                    
-  
-    // endth here the variable declarations
-    // this be mine, I think it's pretty readable if you can get past the pirate thing
-    for (i = 0; i < settings.levels; i++) { 
-      radialOffset = (settings.radius * (i +1));
-
-      if (i == 0){
-        plasma.push(plotCenter());
-      }
-    }
-
-    plasma.push(plotA(radialOffset));
-    plasma.push(plotB(radialOffset));
-    plasma.push(plotC(radialOffset));
-    plasma.push(plotD(radialOffset));
-    plasma.push(plotE(radialOffset));
-    plasma.push(plotF(radialOffset));
-
-     return plasma;
-  }
-
-  return {
-    sun: this.sun, 
-    moon: this.moon 
-  };
-
-
-  function plotCenter(){
-    var plot = {};
-    plot.x = settings.startX;
-    plot.y = settings.startY;
-    return plot;
-  }
-	function plotA(radius){
-		var plot = {};
-		plot.x = settings.startX + (radius * Math.sin(60));
-		plot.y = settings.startY + (radius * Math.cos(60));
-		return plot;
-	}
-	function plotB(radius){
-		var plot = {};
-		plot.x = settings.startX + radius;
-		plot.y = settings.startY;
-		return plot;
-	}
-	function plotC(radius){
-		var plot = {};
-		plot.x = settings.startX + (radius * Math.sin(60));
-		plot.y = settings.startY -(radius * Math.cos(60));
-		return plot;
-	}
-	function plotD(radius){
-		var plot = {};
-		plot.x = settings.startX - (radius * Math.sin(60));
-		plot.y = settings.startY -(radius * Math.cos(60));
-		return plot;
-	}
-	function plotE(radius){
-		var plot = {};
-		plot.x = settings.startX - (radius);
-		plot.y = settings.startY;
-		return plot;
-	}
-	function plotF(radius){
-		var plot = {};
-		plot.x = settings.startX - (radius * Math.sin(60));
-		plot.y = settings.startY + (radius * Math.cos(60));
-		return plot;
-	}
-}
 
 // makeSacred();
 // var plantSeeds = function(startX, startY, spacing, color){
