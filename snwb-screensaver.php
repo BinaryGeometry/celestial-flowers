@@ -34,7 +34,7 @@ class SNWB_Screensaver extends WP_Widget {
 	 */
 	public function load_scripts() {
 	    wp_enqueue_style('snwb-screensaver-styles', SNWB_SCREENSAVER_DIR . 'snwb-screensaver.css' );
-	    wp_enqueue_script( 'd3_js', 'https://d3js.org/d3.v4.min.js', array(), NULL, true );
+	    wp_enqueue_script( 'd3_js', SNWB_SCREENSAVER_DIR . '/d3/d3.min.js', array(), NULL, true );
 	    wp_enqueue_script( 'snwb-screensaver-js',SNWB_SCREENSAVER_DIR . '/snwb-screensaver.js', array('d3_js'), '1.0.0', true );
 	}
 

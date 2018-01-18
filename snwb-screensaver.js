@@ -1,25 +1,23 @@
-var plantSeeds = function(startX, startY, spacing, color){
-  
-  // var jsonCircles = [];
-  
-  var seedMap = [
-    { "x_axis": startX, "y_axis": startX, "radius": spacing, "color" : "brown" },
-    { "x_axis": startX, "y_axis": (spacing * 2), "radius": spacing, "color" : "brown"},
-    { "x_axis": (spacing * 2), "y_axis": 0, "radius": spacing, "color" : "green"},
-    { "x_axis": (spacing * 2), "y_axis": (spacing * 2), "radius": spacing, "color" : "green"},
-    { "x_axis": (spacing * 4), "y_axis": 0, "radius": spacing, "color" : "brown"},
-    { "x_axis": (spacing * 4), "y_axis": (spacing * 2), "radius": spacing, "color" : "brown"}
-  ];
+// var jsonCircles = [
+//    { "x_axis": 0, "y_axis": 0, "radius": 50, "color" : "brown" },
+//    { "x_axis": 0, "y_axis": 100, "radius": 50, "color" : "brown"},
+//    { "x_axis": 100, "y_axis": 0, "radius": 50, "color" : "green"},
+//    { "x_axis": 100, "y_axis": 100, "radius": 50, "color" : "green"},
+//    { "x_axis": 200, "y_axis": 0, "radius": 50, "color" : "brown"},
+//    { "x_axis": 200, "y_axis": 100, "radius": 50, "color" : "brown"}
 
-  return seedMap;
-}
-
+// ];
 function surveyPlot(width, height, startX, startY, spacing){
 
+    // store our completed results
+
+    var survey = {};
+
     var movesAlongX = ( Math.ceil( width / spacing ) );
-    console.log('movesAlongX', movesAlongX)
+    console.log('movesAlongX', Math.ceil( movesAlongX / 2 ) );
+    
     var movesAlongY = ( Math.ceil( height / spacing ) );
-    console.log('movesAlongY', movesAlongY)
+    console.log('movesAlongY', Math.ceil( movesAlongY / 2 ) );
 
     var plantingMachinePath = [];
     
@@ -49,80 +47,87 @@ function surveyPlot(width, height, startX, startY, spacing){
       machinePositionY = machinePositionY + (spacing * 2);
 
     }
-    
-    console.log('plantingMachinePath', plantingMachinePath)
-    return plantingMachinePath;
-
+    survey = {
+      movesAlongX: movesAlongX,
+      movesAlongY: movesAlongY,
+      plantingMachinePath: plantingMachinePath
+    }
+    // console.log('plantingMachinePath', plantingMachinePath)
+    // return plantingMachinePath;
+    return survey;
 }
 
-// surveyPlot(1200, 500, 0, 0, 50);
-var plantingMachineInstructions = new surveyPlot(1200, 500, 0, 0, 50);
+var Survey = new surveyPlot(1200, 500, 0, 0, 50)
 
-console.log(plantingMachineInstructions)
-// var jsonCircles = [
-//    { "x_axis": 0, "y_axis": 0, "radius": 50, "color" : "brown" },
-//    { "x_axis": 0, "y_axis": 100, "radius": 50, "color" : "brown"},
-//    { "x_axis": 100, "y_axis": 0, "radius": 50, "color" : "green"},
-//    { "x_axis": 100, "y_axis": 100, "radius": 50, "color" : "green"},
-//    { "x_axis": 200, "y_axis": 0, "radius": 50, "color" : "brown"},
-//    { "x_axis": 200, "y_axis": 100, "radius": 50, "color" : "brown"}
 
-// ];
+// var plantGarden = function(plantingMachineInstructions, plantingstyle){
+//   var plantingstyle = plantingstyle || {
+
+//   }
+// }
+
+// console.log(plantingMachineInstructions)
+
 
  
-// var pl = makeSacred.go(50)
-// console.log('dfd', pl)
-
-// var foo = plantingMachineInstructions.concat()
- // console.log('dfd', foo)
- 
-var svgContainer = d3.select("#container").append("svg")
+  var svgContainer = d3.select("#container").append("svg")
                                      .attr("width", 1200)
                                      .attr("height", 500);
  
-var circles = svgContainer.selectAll("circle")
+  var circles = svgContainer.selectAll("circle")
                           // .data(plantSeeds(0,0,50,'green'))
                           // .data(jsonCircles)
                           // .data(foo)
                           // .data(makeSacred(50, 'sun'))
-                          .data(plantingMachineInstructions)
+                          .data(Survey.plantingMachinePath)
                           .enter()
                           .append("circle");
 
-var circleAttributes = circles
+  var circleAttributes = circles
                        .attr("cx", function (d) { return d.x_axis; })
                        .attr("cy", function (d) { return d.y_axis; })
                        .attr("r", function (d) { return d.radius; })
                        .style("stroke", function(d) { return d.color; })
                        .style("fill", function(d) { return 'transparent'; });
 
-console.log(circleAttributes);
+  console.log(circleAttributes);
 
+  setInterval(function(){
 
+    // var circles.data(makeSacred(count));
+        // circles.exit().remove();//remove unneeded circles
+        // circles.transition().duration(300).append("circle")
+        // circles.enter().append("circle")
+        //                   .attr("cx", function(d){ return d.x; })
+        //                  .attr("cy", function(d){ return d.y; })
+        //                  .attr("r", 10+count)
+        //                  .style("stroke", 'green') 
+        //                  .style('fill', 'rgba(0, 0, 0, 0.4)')
 
+                          
+  }, 600)
 
-
-  var plough = function(container){
-    var svgContainer = d3.select(container)
-    var width = svgContainer.node().getBoundingClientRect().width;
-    var height = svgContainer.node().getBoundingClientRect().height;
+  // var plough = function(container){
+  //   var svgContainer = d3.select(container)
+  //   var width = svgContainer.node().getBoundingClientRect().width;
+  //   var height = svgContainer.node().getBoundingClientRect().height;
     
-    console.log(width, height);
+  //   console.log(width, height);
 
-    var circleRadii = [40, 20, 10];
+  //   var circleRadii = [40, 20, 10];
     
-    svgContainer.append("svg")
-      .attr("width", width)
-      .attr("height", height);
-      field.selectAll("circle")
-          // .data(circleRadii)        
-          .data(makeSacred(1, plant))
-          .enter()
-          .append("circle")
-          console.log(circles)
+  //   svgContainer.append("svg")
+  //     .attr("width", width)
+  //     .attr("height", height);
+  //     field.selectAll("circle")
+  //         // .data(circleRadii)        
+  //         .data(makeSacred(1, plant))
+  //         .enter()
+  //         .append("circle")
+  //         console.log(circles)
     
-    // return svgContainer;
-  }
+  //   // return svgContainer;
+  // }
 
   // var svgContainer = d3.select("#container")
   //       .append("svg")
@@ -131,69 +136,68 @@ console.log(circleAttributes);
     
   // var circleRadii = [40, 20, 10];
   
-  var gardenTidily = function(container, field, plant){
+  // var gardenTidily = function(container, field, plant){
 
-    // var circleRadii = [40, 20, 10];
+  //   // var circleRadii = [40, 20, 10];
 
-    var circles = field.selectAll("circle")
+  //   var circles = field.selectAll("circle")
     
-          // .data(circleRadii)        
-          .data(makeSacred(1, plant))
-          .enter()
-          .append("circle")
-          console.log(circles)
+  //         // .data(circleRadii)        
+  //         .data(makeSacred(1, plant))
+  //         .enter()
+  //         .append("circle")
+  //         console.log(circles)
     
-    var circleAttributes = circles
-          .attr("cx", function(d){ return d.x; })
-          .attr("cy", function(d){ return d.y; })
-          .attr("r", 50)
-          .style("stroke", 'green') 
-          // .style('fill', 'transparent')
+  //   var circleAttributes = circles
+  //         .attr("cx", function(d){ return d.x; })
+  //         .attr("cy", function(d){ return d.y; })
+  //         .attr("r", 50)
+  //         .style("stroke", 'green') 
+  //         // .style('fill', 'transparent')
 
-    var count = 1;
+  //   var count = 1;
     
-    // setInterval(function(){
-    //   if (count < 10){
-    //  		count++;
-    //  	}
-    //  	else  {
-    //  		count--;
-    //  	}
-    //   console.log(container, count)
-    //   //rejoin data
-    // 	var circles = svgContainer.selectAll("circle")
-    //     .data(makeSacred(count, plant));
-    //   circles.exit().remove();//remove unneeded circles
-    //   circles.enter().append("circle")
-    //   // circles.transition().duration(300).append("circle")
-    //     .attr("cx", function(d){ return d.x; })
-    //     .attr("cy", function(d){ return d.y; })
-    //     .attr("r", 10+count)
-    //     .style("stroke", 'green') 
-    //     .style('fill', 'rgba(0, 0, 0, 0.4)')   		
-    // }, 600)
-
-  }
+  //   // setInterval(function(){
+  //   //   if (count < 10){
+  //   //  		count++;
+  //   //  	}
+  //   //  	else  {
+  //   //  		count--;
+  //   //  	}
+  //   //   console.log(container, count)
+  //   //   //rejoin data
+  //   // 	var circles = svgContainer.selectAll("circle")
+  //   //     .data(makeSacred(count, plant));
+  //   //   circles.exit().remove();//remove unneeded circles
+  //   //   circles.enter().append("circle")
+  //   //   // circles.transition().duration(300).append("circle")
+  //   //     .attr("cx", function(d){ return d.x; })
+  //   //     .attr("cy", function(d){ return d.y; })
+  //   //     .attr("r", 10+count)
+  //   //     .style("stroke", 'green') 
+  //   //     .style('fill', 'rgba(0, 0, 0, 0.4)')   		
+  //   // }, 600)
+  // }
   
   // var field = plough('#container');
   // console.log(field);
   // gardenTidily("#container", field, 'sun');
   // gardenTidily("#container", field, 'moon');
 
-  function plotHexagon(){
-    var pythagorean_puzzle = (Math.sqrt(3)/2),
-    radius = 100,
-    xp = 250,
-    yp = 150,
-    hexagonData = [
-      { "x": radius+xp,   "y": yp}, 
-      { "x": radius/2+xp,  "y": radius*h+yp},
-      { "x": -radius/2+xp,  "y": radius*h+yp},
-      { "x": -radius+xp,  "y": yp},
-      { "x": -radius/2+xp,  "y": -radius*h+yp},
-      { "x": radius/2+xp, "y": -radius*h+yp}
-    ];
-  }
+// function plotHexagon(){
+//   var pythagorean_puzzle = (Math.sqrt(3)/2),
+//   radius = 100,
+//   xp = 250,
+//   yp = 150,
+//   hexagonData = [
+//     { "x": radius+xp,   "y": yp}, 
+//     { "x": radius/2+xp,  "y": radius*h+yp},
+//     { "x": -radius/2+xp,  "y": radius*h+yp},
+//     { "x": -radius+xp,  "y": yp},
+//     { "x": -radius/2+xp,  "y": -radius*h+yp},
+//     { "x": radius/2+xp, "y": -radius*h+yp}
+//   ];
+// }
 
 function makeSacred(radius){
 
@@ -236,13 +240,12 @@ function makeSacred(radius){
       return plasma;
 
   }
-  var moon = function(location){
+  this.moon = function(location){
 
     location = location || {x:150,y:250};
     
     plasma = []; //[{"x": xp, "y": yp}]; /* Contains the substance to be passed to the view updater */
     
-
     settings = {
       // startX: 150,
       // startY: 250,
@@ -251,9 +254,7 @@ function makeSacred(radius){
       levels: radius,
       radius: 25
     }                    
-
-
-    
+  
     // endth here the variable declarations
     // this be mine, I think it's pretty readable if you can get past the pirate thing
     for (i = 0; i < settings.levels; i++) { 
@@ -271,18 +272,13 @@ function makeSacred(radius){
     plasma.push(plotE(radialOffset));
     plasma.push(plotF(radialOffset));
 
-
      return plasma;
   }
 
-  if(celestialbody == 'moon'){
-    return 
-      moon;
-  }
-
-  if(celestialbody == 'sun'){
-    return {go: this.sun }
-  }
+  return {
+    sun: this.sun, 
+    moon: this.moon 
+  };
 
 
   function plotCenter(){
@@ -330,3 +326,18 @@ function makeSacred(radius){
 }
 
 // makeSacred();
+// var plantSeeds = function(startX, startY, spacing, color){
+  
+//   // var jsonCircles = [];
+  
+//   var seedMap = [
+//     { "x_axis": startX, "y_axis": startX, "radius": spacing, "color" : "brown" },
+//     { "x_axis": startX, "y_axis": (spacing * 2), "radius": spacing, "color" : "brown"},
+//     { "x_axis": (spacing * 2), "y_axis": 0, "radius": spacing, "color" : "green"},
+//     { "x_axis": (spacing * 2), "y_axis": (spacing * 2), "radius": spacing, "color" : "green"},
+//     { "x_axis": (spacing * 4), "y_axis": 0, "radius": spacing, "color" : "brown"},
+//     { "x_axis": (spacing * 4), "y_axis": (spacing * 2), "radius": spacing, "color" : "brown"}
+//   ];
+
+//   return seedMap;
+// }
