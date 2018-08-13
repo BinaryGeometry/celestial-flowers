@@ -4,7 +4,7 @@
 Plugin Name: Snowbotica Screensaver
 Plugin URI: http://binarygeometry.co.uk/plugins/screensaver
 Description: A WordPress plugin.
-Version: 0.4.1
+Version: 1.4.1
 Author: Andrew MacKay
 Author URI: http://whitespaceisdesign.com
 License: GPL2
@@ -35,7 +35,7 @@ class SNWB_Screensaver extends WP_Widget {
 	public function load_scripts() {
 	    wp_enqueue_style('snwb-screensaver-styles', SNWB_SCREENSAVER_DIR . 'snwb-screensaver.css' );
 	    wp_enqueue_script( 'd3_js', SNWB_SCREENSAVER_DIR . '/d3/d3.min.js', array(), NULL, true );
-	    wp_enqueue_script( 'snwb-screensaver-js',SNWB_SCREENSAVER_DIR . '/snwb-screensaver.js', array('d3_js'), '1.0.0', true );
+	    wp_enqueue_script( 'snwb-screensaver-js',SNWB_SCREENSAVER_DIR . '/snwb-screensaver.js', array('d3_js'), '1.4.1', true );
 	}
 
 

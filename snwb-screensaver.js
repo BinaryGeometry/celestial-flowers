@@ -1,231 +1,497 @@
-function makeSacred(){
+//helper
+/**
+ * converts degree to radians
+ * @param degree
+ * @returns {number}
+ */
+var toRadians = function (degree) {
+    return degree * (Math.PI / 180);
+};
 
-  this.sun = function(location) {
+/**
+ * Converts radian to degree
+ * @param radians
+ * @returns {number}
+ */
+var toDegree = function (radians) {
+    return radians * (180 / Math.PI);
+}
+
+/**
+ * Rounds a number mathematical correct to the number of decimals
+ * @param number
+ * @param decimals (optional, default: 5)
+ * @returns {number}
+ */
+var roundNumber = function(number, decimals) {
+    decimals = decimals || 5;
+    return Math.round(number * Math.pow(10, decimals)) / Math.pow(10, decimals);
+}
+//the object
+var MathD = {
+    sin: function(number){
+        return roundNumber(Math.sin(toRadians(number)));
+    },
+    cos: function(number){
+        return roundNumber(Math.cos(toRadians(number)));
+    },
+    tan: function(number){
+        return roundNumber(Math.tan(toRadians(number)));
+    },
+    asin: function(number){
+        return roundNumber(toDegree(Math.asin(number)));
+    },
+    acos: function(number){
+       return roundNumber(toDegree(Math.acos(number)));
+   },
+   atan: function(number){
+       return roundNumber(toDegree(Math.atan(number)));
+   }
+};
+
+// the square on the hypotenuse is equal to the sum of the squares on the other two sides
+
+
+// if angle less than 
+
+var budget = {
+  "budget": {
+    "uid" : "all-the-budget",
+    "name": "unreal product development",
+    "icon":"fas fa-bug",
+    "total_commited": "",
+    "campaigns": [
+      {"campaign_id":"1","budget_id":"all-the-budget","campaign_name":"Email Marketing",          "budget_commited":"4000","total_sales":"","total_marketing_spend":""},
+      {"campaign_id":"2","budget_id":"all-the-budget","campaign_name":"Blogging and Social Media","budget_commited":"2000","total_sales":"","total_marketing_spend":""},
+      {"campaign_id":"3","budget_id":"all-the-budget","campaign_name":"Loss Leaders",             "budget_commited":"6000","total_sales":"","total_marketing_spend":""}
+    ],
+    "assets": [
+      {"asset_id":"1","asset_type":"","asset_name":"Asset Name","campaign_id":"1","total_spend":"100"},
+      {"asset_id":"2","asset_type":"","asset_name":"Asset Name","campaign_id":"1","total_spend":"200"},
+      {"asset_id":"3","asset_type":"","asset_name":"Asset Name","campaign_id":"2","total_spend":"300"},
+      {"asset_id":"4","asset_type":"","asset_name":"Asset Name","campaign_id":"2","total_spend":"400"},
+      {"asset_id":"5","asset_type":"","asset_name":"Asset Name","campaign_id":"3","total_spend":"500"},
+      {"asset_id":"6","asset_type":"","asset_name":"Asset Name","campaign_id":"3","total_spend":"600"}
+    ]
+  }
+};
+
+var outerR = 150;
+var innR   = 100;
+var axleR  = 50;
+var centerX = 400;
+var centerY = 00;
+
+var json = {"nodes":[
+  {"x_axis":centerX, "y_axis":centerY, "radius":outerR, "color":"red", "label":"a"}, 
+  {"x_axis":centerX, "y_axis":centerY, "radius":innR,   "color":"gold", "label":"b"}, 
+  {"x_axis":centerX, "y_axis":centerY, "radius":axleR,  "color":"green", "label":"c"}
+]};
+
+
+function NodeSplicer(data)
+{
+     // private property
+     var budget;
+     var campaigns;
+     var assets;
+
+     // private constructor 
+     var __construct = function() {
       
-      location = location || {x:150,y:250};
-      
-      var h = (Math.sqrt(3)/2),
-      radius = 100,
-      xp = location.x, //150,
-      yp = location.y, //250,
-      // hexagonData = [
-      // { "x": radius+xp,   "y": yp}, 
-      // { "x": radius/2+xp,  "y": radius*h+yp},
-      // { "x": -radius/2+xp,  "y": radius*h+yp},
-      // { "x": -radius+xp,  "y": yp},
-      // { "x": -radius/2+xp,  "y": -radius*h+yp},
-      // { "x": radius/2+xp, "y": -radius*h+yp},
-      // ]
-      hexagonData = [
-      { "x_axis": radius+xp,   "y_axis": yp, radius:50, "color": "green"}, 
-      { "x_axis": radius/2+xp,  "y_axis": radius*h+yp, radius:50, "color": "green"},
-      { "x_axis": -radius/2+xp,  "y_axis": radius*h+yp, radius:50, "color": "green"},
-      { "x_axis": -radius+xp,  "y_axis": yp, radius:50, "color": "green"},
-      { "x_axis": -radius/2+xp,  "y_axis": -radius*h+yp, radius:50, "color": "green"},
-      { "x_axis": radius/2+xp, "y_axis": -radius*h+yp, radius:50, "color": "green"},
-      { "x_axis": (radius/2)+xp,   "y_axis": yp, radius:50, "color": "green"}, 
-      { "x_axis": (radius/2)/2+xp,  "y_axis": (radius/2)*h+yp, radius:50, "color": "green"},
-      { "x_axis": -(radius/2)/2+xp,  "y_axis": (radius/2)*h+yp, radius:50, "color": "green"},
-      { "x_axis": -(radius/2)+xp,  "y_axis": yp, radius:50, "color": "green"},
-      { "x_axis": -(radius/2)/2+xp,  "y_axis": -(radius/2)*h+yp, radius:50, "color": "green"},
-      { "x_axis": (radius/2)/2+xp, "y_axis": -(radius/2)*h+yp, radius:50, "color": "green"},
-      ],
-      plasma = []; //[{"x": xp, "y": yp}]; /* Contains the substance to be passed to the view updater */
+          
+         budget    = data.budget;
+         campaigns = budget.campaigns;
+         assets    = budget.assets;
+     }()
 
-      // this be the https://codepen.io/MarcBT/pen/wcLCe/ method
-      for (var i = hexagonData.length - 1; i >= 0; i--) {
-        plasma.push(hexagonData[i])
-      }
-      return plasma;
-
-  }
-  this.moon = function(location){
-
-    location = location || {x:150,y:250};
-    
-    plasma = []; //[{"x": xp, "y": yp}]; /* Contains the substance to be passed to the view updater */
-    
-    settings = {
-      // startX: 150,
-      // startY: 250,
-      startX: location.x,
-      startY: location.y,
-      levels: radius,
-      radius: 25
-    }                    
-  
-    // endth here the variable declarations
-    // this be mine, I think it's pretty readable if you can get past the pirate thing
-    for (i = 0; i < settings.levels; i++) { 
-      radialOffset = (settings.radius * (i +1));
-
-      if (i == 0){
-        plasma.push(plotCenter());
-      }
-    }
-
-    plasma.push(plotA(radialOffset));
-    plasma.push(plotB(radialOffset));
-    plasma.push(plotC(radialOffset));
-    plasma.push(plotD(radialOffset));
-    plasma.push(plotE(radialOffset));
-    plasma.push(plotF(radialOffset));
-
-     return plasma;
-  }
-
-  return {
-    sun: this.sun, 
-    moon: this.moon ,
-    flower: this.flower
-  };
-
-
-  function plotCenter(){
-    var plot = {};
-    plot.x = settings.startX;
-    plot.y = settings.startY;
-    return plot;
-  }
-  function plotA(radius){
-    var plot = {};
-    plot.x = settings.startX + (radius * Math.sin(60));
-    plot.y = settings.startY + (radius * Math.cos(60));
-    return plot;
-  }
-  function plotB(radius){
-    var plot = {};
-    plot.x = settings.startX + radius;
-    plot.y = settings.startY;
-    return plot;
-  }
-  function plotC(radius){
-    var plot = {};
-    plot.x = settings.startX + (radius * Math.sin(60));
-    plot.y = settings.startY -(radius * Math.cos(60));
-    return plot;
-  }
-  function plotD(radius){
-    var plot = {};
-    plot.x = settings.startX - (radius * Math.sin(60));
-    plot.y = settings.startY -(radius * Math.cos(60));
-    return plot;
-  }
-  function plotE(radius){
-    var plot = {};
-    plot.x = settings.startX - (radius);
-    plot.y = settings.startY;
-    return plot;
-  }
-  function plotF(radius){
-    var plot = {};
-    plot.x = settings.startX - (radius * Math.sin(60));
-    plot.y = settings.startY + (radius * Math.cos(60));
-    return plot;
-  }
+   this.getColor = function()
+   {
+       return color;
+   };
+   this.plotCenter = function()
+   {
+      return campaigns;
+   };
 }
 
-
-console.log(makeSacred.flower)
-// var jsonCircles = [
-//    { "x_axis": 0, "y_axis": 0, "radius": 50, "color" : "brown" },
-//    { "x_axis": 0, "y_axis": 100, "radius": 50, "color" : "brown"},
-//    { "x_axis": 100, "y_axis": 0, "radius": 50, "color" : "green"},
-//    { "x_axis": 100, "y_axis": 100, "radius": 50, "color" : "green"},
-//    { "x_axis": 200, "y_axis": 0, "radius": 50, "color" : "brown"},
-//    { "x_axis": 200, "y_axis": 100, "radius": 50, "color" : "brown"}
-
-// ];
-function surveyPlot(width, height, startX, startY, spacing){
-
-    // store our completed results
-
-    var survey = {};
-
-    var movesAlongX = ( Math.ceil( width / spacing ) );
-    console.log('movesAlongX', Math.ceil( movesAlongX / 2 ) );
-    
-    var movesAlongY = ( Math.ceil( height / spacing ) );
-    console.log('movesAlongY', Math.ceil( movesAlongY / 2 ) );
-
-    var plantingMachinePath = [];
-    
-    var machineStartX = startX;
-    var machineStartY = startY;
-        
-    var machinePositionX = machineStartX;
-    var machinePositionY = machineStartY;
-
-    // we need to know how many passes of the field the machine makes
-    for (var i = movesAlongX / 2; i >= 0; i--) {
-
-            
-      // at each planting location along the pass we make a measurement
-      for (var p = movesAlongX / 2; p >= 0; p--){
-
-        plantingMachinePath.push( {"x_axis": machinePositionX, "y_axis":machinePositionY, "radius":spacing, color:"tomato"} ) 
-
-        machinePositionX = machinePositionX + (spacing * 2);
-      
-      }
-
-      // at the end we reset the y co-ordinate
-      machinePositionX = 0;
-
-      // move the machine along the row to the next pass
-      machinePositionY = machinePositionY + (spacing * 2);
-
-    }
-    survey = {
-      movesAlongX: movesAlongX,
-      movesAlongY: movesAlongY,
-      plantingMachinePath: plantingMachinePath
-    }
-    // console.log('plantingMachinePath', plantingMachinePath)
-    // return plantingMachinePath;
-    return survey;
-}
-
-var Survey = new surveyPlot(1200, 500, 0, 0, 50)
+var go = new NodeSplicer(budget);
 
 
-// var plantGarden = function(plantingMachineInstructions, plantingstyle){
-//   var plantingstyle = plantingstyle || {
+var numberOfNodes = 6;
+var angle = ( 360 / numberOfNodes );
+var radius = radius;
+var trueNorth = false;
 
-//   }
-// }
-
-// console.log(plantingMachineInstructions)
+console.log(go.plotCenter);
 
 
-/**/
-// takes a node and returns a fan planting pattern
-var flower = function(data){
-  var roots = data;
-  roots.color = 'green';
-  console.log('anything', roots)
-  return roots;
-}
 
-var wateringPlan = []
-for (var i = Survey.plantingMachinePath.length - 1; i >= 0; i--) {
-  console.log('here', Survey.plantingMachinePath[i]);
-  wateringPlan.push(flower(Survey.plantingMachinePath[i]))
+var outerR = 150;
+var innR   = 100;
+var axleR  = 50;
+var centerX = 200;
+var centerY = 200;
 
-}
-Survey.plantingMachinePath = wateringPlan;
-/**/
+var oneX = ( ( MathD.sin(30) ) * ( outerR / MathD.sin(90) ) );
+var oneY = ( ( MathD.sin(60) ) * ( outerR / MathD.sin(90) ) );
+
+var twoX = ( ( MathD.sin(30) ) * ( innR / MathD.sin(90) ) );
+var twoY = ( ( MathD.sin(60) ) * ( innR / MathD.sin(90) ) );
+
+var clockFace = {
+ one: {
+     x: centerX + oneX,
+     y: centerY + oneY
+ },
+ two: {
+     x: centerX + twoX,
+     y: centerY + twoY
+ }
+};
+
+console.log(clockFace)
+
+var json = {"nodes":[
+  {"x_axis":centerX, "y_axis":centerY, "radius":outerR, "color":"red", "label":"a"}, 
+  {"x_axis":centerX, "y_axis":centerY, "radius":innR,   "color":"gold", "label":"b"}, 
+  {"x_axis":centerX, "y_axis":centerY, "radius":axleR,  "color":"green", "label":"c"},
+  {"x_axis":clockFace.one.x, "y_axis":clockFace.one.y, "radius":20,  "color":"blue", "label":"1"},
+  {"x_axis":clockFace.two.x, "y_axis":clockFace.two.y, "radius":10,  "color":"blue", "label":"2"}
+]};
 
   var svgContainer = d3.select("#container").append("svg")
-                                     .attr("width", 1200)
-                                     .attr("height", 500);
+                                     .attr("width", 700)
+                                     .attr("height", 700)
+                                     .style("fill",function(d) { return 'orange'; });
  
   var circles = svgContainer.selectAll("circle")
-                          // .data(plantSeeds(0,0,50,'green'))
-                          // .data(jsonCircles)
-                          // .data(foo)
-                          // .data(makeSacred(50, 'sun'))
-                          .data(Survey.plantingMachinePath)
+                          .data(json.nodes)
+                          .enter()
+                          .append("circle");
+
+  var circleAttributes = circles
+                       .attr("cx", function (d) { return d.x_axis; })
+                       .attr("cy", function (d) { return d.y_axis; })
+                       .attr("r", function (d) { return d.radius; })
+                       .style("stroke", function(d) { return d.color; })
+                       .style("fill", function(d) { return 'transparent'; });
+
+//helper
+/**
+ * converts degree to radians
+ * @param degree
+ * @returns {number}
+ */
+var toRadians = function (degree) {
+    return degree * (Math.PI / 180);
+};
+
+/**
+ * Converts radian to degree
+ * @param radians
+ * @returns {number}
+ */
+var toDegree = function (radians) {
+    return radians * (180 / Math.PI);
+}
+
+/**
+ * Rounds a number mathematical correct to the number of decimals
+ * @param number
+ * @param decimals (optional, default: 5)
+ * @returns {number}
+ */
+var roundNumber = function(number, decimals) {
+    decimals = decimals || 5;
+    return Math.round(number * Math.pow(10, decimals)) / Math.pow(10, decimals);
+}
+//the object
+var MathD = {
+    sin: function(number){
+        return roundNumber(Math.sin(toRadians(number)));
+    },
+    cos: function(number){
+        return roundNumber(Math.cos(toRadians(number)));
+    },
+    tan: function(number){
+        return roundNumber(Math.tan(toRadians(number)));
+    },
+    asin: function(number){
+        return roundNumber(toDegree(Math.asin(number)));
+    },
+    acos: function(number){
+       return roundNumber(toDegree(Math.acos(number)));
+   },
+   atan: function(number){
+       return roundNumber(toDegree(Math.atan(number)));
+   }
+};
+
+var budget = {
+"budget": {
+  "uid" : "all-the-budget",
+  "name": "unreal product development",
+  "icon":"fas fa-bug",
+  "total_commited": "",
+  "campaigns": [
+    {"campaign_id":"1","budget_id":"all-the-budget","campaign_name":"Email Marketing",          "budget_commited":"4000","total_sales":"","total_marketing_spend":""},
+    {"campaign_id":"2","budget_id":"all-the-budget","campaign_name":"Blogging and Social Media","budget_commited":"2000","total_sales":"","total_marketing_spend":""},
+    {"campaign_id":"3","budget_id":"all-the-budget","campaign_name":"Loss Leaders",             "budget_commited":"6000","total_sales":"","total_marketing_spend":""}
+  ],
+  "assets": [
+    {"asset_id":"1","asset_type":"","asset_name":"Asset Name","campaign_id":"1","total_spend":"100"},
+    {"asset_id":"2","asset_type":"","asset_name":"Asset Name","campaign_id":"1","total_spend":"200"},
+    {"asset_id":"3","asset_type":"","asset_name":"Asset Name","campaign_id":"2","total_spend":"300"},
+    {"asset_id":"4","asset_type":"","asset_name":"Asset Name","campaign_id":"2","total_spend":"400"},
+    {"asset_id":"5","asset_type":"","asset_name":"Asset Name","campaign_id":"3","total_spend":"500"},
+    {"asset_id":"6","asset_type":"","asset_name":"Asset Name","campaign_id":"3","total_spend":"600"}
+  ]
+}
+};
+
+var outerR = 150;
+var innR   = 100;
+var axleR  = 50;
+var centerX = 200;
+var centerY = 200;
+
+var oneOuterX = centerX + ( ( MathD.sin(30) ) * ( outerR / MathD.sin(90) ) );
+var oneOuterY = centerY - ( ( MathD.sin(60) ) * ( outerR / MathD.sin(90) ) );
+var oneInnerX = centerX + ( ( MathD.sin(30) ) * ( innR / MathD.sin(90) ) );
+var oneInnerY = centerY - ( ( MathD.sin(60) ) * ( innR / MathD.sin(90) ) );
+
+var twoOuterX = centerX + ( ( MathD.sin(60) ) * ( outerR / MathD.sin(90) ) );
+var twoOuterY = centerY - ( ( MathD.sin(30) ) * ( outerR / MathD.sin(90) ) );
+var twoInnerX = centerX + ( ( MathD.sin(60) ) * ( innR / MathD.sin(90) ) );
+var twoInnerY = centerY - ( ( MathD.sin(30) ) * ( innR / MathD.sin(90) ) );
+
+var threeOuterX = centerX + outerR;
+var threeOuterY = centerY + 0;
+var threeInnerX = centerX + innR;
+var threeInnerY = centerY + 0;
+
+var fourOuterX = centerX + ( ( MathD.sin(60) ) * ( outerR / MathD.sin(90) ) );
+var fourOuterY = centerY + ( ( MathD.sin(30) ) * ( outerR / MathD.sin(90) ) );
+var fourInnerX = centerX + ( ( MathD.sin(60) ) * ( innR / MathD.sin(90) ) );
+var fourInnerY = centerY + ( ( MathD.sin(30) ) * ( innR / MathD.sin(90) ) );
+
+var fiveOuterX = centerX + ( ( MathD.sin(30) ) * ( outerR / MathD.sin(90) ) );
+var fiveOuterY = centerY + ( ( MathD.sin(60) ) * ( outerR / MathD.sin(90) ) );
+var fiveInnerX = centerX + ( ( MathD.sin(30) ) * ( innR / MathD.sin(90) ) );
+var fiveInnerY = centerY + ( ( MathD.sin(60) ) * ( innR / MathD.sin(90) ) );
+
+var sixOuterX = centerX + 0;
+var sixOuterY = centerY + outerR;
+var sixInnerX = centerX + 0;
+var sixInnerY = centerY + innR;
+
+var sevenOuterX = centerX - ( ( MathD.sin(30) ) * ( outerR / MathD.sin(90) ) );
+var sevenOuterY = centerY + ( ( MathD.sin(60) ) * ( outerR / MathD.sin(90) ) );
+var sevenInnerX = centerX - ( ( MathD.sin(30) ) * ( innR / MathD.sin(90) ) );
+var sevenInnerY = centerY + ( ( MathD.sin(60) ) * ( innR / MathD.sin(90) ) );
+
+var eightOuterX = centerX - ( ( MathD.sin(60) ) * ( outerR / MathD.sin(90) ) );
+var eightOuterY = centerY + ( ( MathD.sin(30) ) * ( outerR / MathD.sin(90) ) );
+var eightInnerX = centerX - ( ( MathD.sin(60) ) * ( innR / MathD.sin(90) ) );
+var eightInnerY = centerY + ( ( MathD.sin(30) ) * ( innR / MathD.sin(90) ) );
+
+var nineOuterX = centerX - outerR;
+var nineOuterY = centerY - 0;
+var nineInnerX = centerX - innR;
+var nineInnerY = centerY - 0;
+
+var tenOuterX = centerX - ( ( MathD.sin(60) ) * ( outerR / MathD.sin(90) ) );
+var tenOuterY = centerY - ( ( MathD.sin(30) ) * ( outerR / MathD.sin(90) ) );
+var tenInnerX = centerX - ( ( MathD.sin(60) ) * ( innR / MathD.sin(90) ) );
+var tenInnerY = centerY - ( ( MathD.sin(30) ) * ( innR / MathD.sin(90) ) );
+
+var elevenOuterX = centerX - ( ( MathD.sin(30) ) * ( outerR / MathD.sin(90) ) );
+var elevenOuterY = centerY - ( ( MathD.sin(60) ) * ( outerR / MathD.sin(90) ) );
+var elevenInnerX = centerX - ( ( MathD.sin(30) ) * ( innR / MathD.sin(90) ) );
+var elevenInnerY = centerY - ( ( MathD.sin(60) ) * ( innR / MathD.sin(90) ) );
+
+var twelveOuterX = centerX - 0;
+var twelveOuterY = centerY - outerR;
+var twelveInnerX = centerX - 0;
+var twelveInnerY = centerY - innR;
+
+var clockFace = {
+  one: {
+    outer: {
+      x: oneOuterX,
+      y: oneOuterY
+    },
+    inner: {
+      x: oneInnerX,
+      y: oneInnerY
+    }
+  },
+  two: {
+    outer: {
+      x: twoOuterX,
+      y: twoOuterY
+    },
+    inner: {
+      x: twoInnerX,
+      y: twoInnerY
+    }
+  },
+  three: {
+    outer: {
+      x: threeOuterX,
+      y: threeOuterY
+    },
+    inner: {
+      x: threeInnerX,
+      y: threeInnerY
+    }
+  },
+  four: {
+    outer: {
+      x: fourOuterX,
+      y: fourOuterY
+    },
+    inner: {
+      x: fourInnerX,
+      y: fourInnerY
+    }
+  },
+  five: {
+    outer: {
+      x: fiveOuterX,
+      y: fiveOuterY
+    },
+    inner: {
+      x: fiveInnerX,
+      y: fiveInnerY
+    }
+  },
+  six: {
+    outer: {
+      x: sixOuterX,
+      y: sixOuterY
+    },
+    inner: {
+      x: sixInnerX,
+      y: sixInnerY
+    }
+  },
+  seven: {
+    outer: {
+      x: sevenOuterX,
+      y: sevenOuterY
+    },
+    inner: {
+      x: sevenInnerX,
+      y: sevenInnerY
+    }
+  },
+  eight: {
+    outer: {
+      x: eightOuterX,
+      y: eightOuterY
+    },
+    inner: {
+      x: eightInnerX,
+      y: eightInnerY
+    }
+  },
+  nine: {
+    outer: {
+      x: nineOuterX,
+      y: nineOuterY
+    },
+    inner: {
+      x: nineInnerX,
+      y: nineInnerY
+    }
+  },
+  ten: {
+    outer: {
+      x: tenOuterX,
+      y: tenOuterY
+    },
+    inner: {
+      x: tenInnerX,
+      y: tenInnerY
+    }
+  },
+  eleven: {
+    outer: {
+      x: elevenOuterX,
+      y: elevenOuterY
+    },
+    inner: {
+      x: elevenInnerX,
+      y: elevenInnerY
+    }
+  },
+  twelve: {
+    outer: {
+      x: twelveOuterX,
+      y: twelveOuterY
+    },
+    inner: {
+      x: twelveInnerX,
+      y: twelveInnerY
+    }
+  }
+
+};
+
+var json = {"nodes":[
+
+  {"x_axis":centerX, "y_axis":centerY, "radius":outerR, "color":"red", "label":"a"}, 
+  {"x_axis":centerX, "y_axis":centerY, "radius":innR,   "color":"gold", "label":"b"}, 
+  {"x_axis":centerX, "y_axis":centerY, "radius":axleR,  "color":"green", "label":"c"},
+  
+  {"x_axis":clockFace.one.outer.x, "y_axis":clockFace.one.outer.y, "radius":20,  "color":"blue", "label":"1"},
+  {"x_axis":clockFace.one.inner.x, "y_axis":clockFace.one.inner.y, "radius":10,  "color":"blue", "label":"1"},
+  
+  {"x_axis":clockFace.two.outer.x, "y_axis":clockFace.two.outer.y, "radius":20,  "color":"blue", "label":"2"},
+  {"x_axis":clockFace.two.inner.x, "y_axis":clockFace.two.inner.y, "radius":10,  "color":"blue", "label":"2"},
+  
+  {"x_axis":clockFace.three.outer.x, "y_axis":clockFace.three.outer.y, "radius":20,  "color":"blue", "label":"3"},
+  {"x_axis":clockFace.three.inner.x, "y_axis":clockFace.three.inner.y, "radius":10,  "color":"blue", "label":"3"},
+
+  {"x_axis":clockFace.four.outer.x, "y_axis":clockFace.four.outer.y, "radius":20,  "color":"blue", "label":"4"},
+  {"x_axis":clockFace.four.inner.x, "y_axis":clockFace.four.inner.y, "radius":10,  "color":"blue", "label":"4"},
+
+  {"x_axis":clockFace.five.outer.x, "y_axis":clockFace.five.outer.y, "radius":20,  "color":"blue", "label":"4"},
+  {"x_axis":clockFace.five.inner.x, "y_axis":clockFace.five.inner.y, "radius":10,  "color":"blue", "label":"4"},
+
+  {"x_axis":clockFace.six.outer.x, "y_axis":clockFace.six.outer.y, "radius":20,  "color":"blue", "label":"4"},
+  {"x_axis":clockFace.six.inner.x, "y_axis":clockFace.six.inner.y, "radius":10,  "color":"blue", "label":"4"},
+
+  {"x_axis":clockFace.seven.outer.x, "y_axis":clockFace.seven.outer.y, "radius":20,  "color":"blue", "label":"4"},
+  {"x_axis":clockFace.seven.inner.x, "y_axis":clockFace.seven.inner.y, "radius":10,  "color":"blue", "label":"4"},
+
+  {"x_axis":clockFace.eight.outer.x, "y_axis":clockFace.eight.outer.y, "radius":20,  "color":"blue", "label":"4"},
+  {"x_axis":clockFace.eight.inner.x, "y_axis":clockFace.eight.inner.y, "radius":10,  "color":"blue", "label":"4"},
+
+  {"x_axis":clockFace.nine.outer.x, "y_axis":clockFace.nine.outer.y, "radius":20,  "color":"blue", "label":"4"},
+  {"x_axis":clockFace.nine.inner.x, "y_axis":clockFace.nine.inner.y, "radius":10,  "color":"blue", "label":"4"},
+
+  {"x_axis":clockFace.ten.outer.x, "y_axis":clockFace.ten.outer.y, "radius":20,  "color":"blue", "label":"4"},
+  {"x_axis":clockFace.ten.inner.x, "y_axis":clockFace.ten.inner.y, "radius":10,  "color":"blue", "label":"4"},
+
+  {"x_axis":clockFace.eleven.outer.x, "y_axis":clockFace.eleven.outer.y, "radius":20,  "color":"blue", "label":"4"},
+  {"x_axis":clockFace.eleven.inner.x, "y_axis":clockFace.eleven.inner.y, "radius":10,  "color":"blue", "label":"4"},
+
+  {"x_axis":clockFace.twelve.outer.x, "y_axis":clockFace.twelve.outer.y, "radius":20,  "color":"blue", "label":"4"},
+  {"x_axis":clockFace.twelve.inner.x, "y_axis":clockFace.twelve.inner.y, "radius":10,  "color":"blue", "label":"4"}
+
+]};
+
+
+  var svgContainer = d3.select("#container").append("svg")
+                                     .attr("width", 700)
+                                     .attr("height", 700)
+                                     .style("fill",function(d) { return 'orange'; });
+ 
+  var circles = svgContainer.selectAll("circle")
+                          .data(json.nodes)
                           .enter()
                           .append("circle");
 
@@ -237,124 +503,10 @@ Survey.plantingMachinePath = wateringPlan;
                        .style("fill", function(d) { return 'transparent'; });
 
 
-  // setInterval(function(){
-    // var circles.data(makeSacred(count));
-        // circles.exit().remove();//remove unneeded circles
-        // circles.transition().duration(300).append("circle")
-        // circles.enter().append("circle")
-        //                   .attr("cx", function(d){ return d.x; })
-        //                  .attr("cy", function(d){ return d.y; })
-        //                  .attr("r", 10+count)
-        //                  .style("stroke", 'green') 
-        //                  .style('fill', 'rgba(0, 0, 0, 0.4)')
-  // }, 600)
-
-  // var plough = function(container){
-  //   var svgContainer = d3.select(container)
-  //   var width = svgContainer.node().getBoundingClientRect().width;
-  //   var height = svgContainer.node().getBoundingClientRect().height;
-    
-  //   console.log(width, height);
-
-  //   var circleRadii = [40, 20, 10];
-    
-  //   svgContainer.append("svg")
-  //     .attr("width", width)
-  //     .attr("height", height);
-  //     field.selectAll("circle")
-  //         // .data(circleRadii)        
-  //         .data(makeSacred(1, plant))
-  //         .enter()
-  //         .append("circle")
-  //         console.log(circles)
-    
-  //   // return svgContainer;
-  // }
-
-  // var svgContainer = d3.select("#container")
-  //       .append("svg")
-  //       .attr("width", 500)
-  //       .attr("height", 500);
-    
-  // var circleRadii = [40, 20, 10];
-  
-  // var gardenTidily = function(container, field, plant){
-
-  //   // var circleRadii = [40, 20, 10];
-
-  //   var circles = field.selectAll("circle")
-    
-  //         // .data(circleRadii)        
-  //         .data(makeSacred(1, plant))
-  //         .enter()
-  //         .append("circle")
-  //         console.log(circles)
-    
-  //   var circleAttributes = circles
-  //         .attr("cx", function(d){ return d.x; })
-  //         .attr("cy", function(d){ return d.y; })
-  //         .attr("r", 50)
-  //         .style("stroke", 'green') 
-  //         // .style('fill', 'transparent')
-
-  //   var count = 1;
-    
-  //   // setInterval(function(){
-  //   //   if (count < 10){
-  //   //  		count++;
-  //   //  	}
-  //   //  	else  {
-  //   //  		count--;
-  //   //  	}
-  //   //   console.log(container, count)
-  //   //   //rejoin data
-  //   // 	var circles = svgContainer.selectAll("circle")
-  //   //     .data(makeSacred(count, plant));
-  //   //   circles.exit().remove();//remove unneeded circles
-  //   //   circles.enter().append("circle")
-  //   //   // circles.transition().duration(300).append("circle")
-  //   //     .attr("cx", function(d){ return d.x; })
-  //   //     .attr("cy", function(d){ return d.y; })
-  //   //     .attr("r", 10+count)
-  //   //     .style("stroke", 'green') 
-  //   //     .style('fill', 'rgba(0, 0, 0, 0.4)')   		
-  //   // }, 600)
-  // }
-  
-  // var field = plough('#container');
-  // console.log(field);
-  // gardenTidily("#container", field, 'sun');
-  // gardenTidily("#container", field, 'moon');
-
-// function plotHexagon(){
-//   var pythagorean_puzzle = (Math.sqrt(3)/2),
-//   radius = 100,
-//   xp = 250,
-//   yp = 150,
-//   hexagonData = [
-//     { "x": radius+xp,   "y": yp}, 
-//     { "x": radius/2+xp,  "y": radius*h+yp},
-//     { "x": -radius/2+xp,  "y": radius*h+yp},
-//     { "x": -radius+xp,  "y": yp},
-//     { "x": -radius/2+xp,  "y": -radius*h+yp},
-//     { "x": radius/2+xp, "y": -radius*h+yp}
-//   ];
-// }
 
 
-// makeSacred();
-// var plantSeeds = function(startX, startY, spacing, color){
-  
-//   // var jsonCircles = [];
-  
-//   var seedMap = [
-//     { "x_axis": startX, "y_axis": startX, "radius": spacing, "color" : "brown" },
-//     { "x_axis": startX, "y_axis": (spacing * 2), "radius": spacing, "color" : "brown"},
-//     { "x_axis": (spacing * 2), "y_axis": 0, "radius": spacing, "color" : "green"},
-//     { "x_axis": (spacing * 2), "y_axis": (spacing * 2), "radius": spacing, "color" : "green"},
-//     { "x_axis": (spacing * 4), "y_axis": 0, "radius": spacing, "color" : "brown"},
-//     { "x_axis": (spacing * 4), "y_axis": (spacing * 2), "radius": spacing, "color" : "brown"}
-//   ];
 
-//   return seedMap;
-// }
+
+
+
+

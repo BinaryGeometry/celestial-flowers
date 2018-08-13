@@ -13,13 +13,13 @@
 //   });
 
 // var circleRadii = [40, 20, 10];
-var user = 'office',
-    domain = 'binarygeometry.co.uk',
-    element = document.getElementById('email');
+// var user = 'office',
+//     domain = 'binarygeometry.co.uk',
+//     element = document.getElementById('email');
 
-    element.innerHTML = user + '@' + domain;
+//     element.innerHTML = user + '@' + domain;
 
-var svgContainer = d3.select("#container")
+var svgContainer = d3.select("#garden")
 					.append("svg")
                     .attr("width", 500)
                     .attr("height", 500);
