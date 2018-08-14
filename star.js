@@ -268,3 +268,15 @@ var path = svg.selectAll('g')
   .attr('fill', function(d, i) {
     return color(d.data.label);
   });
+
+
+$('.click').on('click', function(){
+	
+	var $t = $(this);
+
+	var dataId = $t.attr('data-id');
+
+	$('.click.active').removeClass('active');
+
+	$t.addClass('active');
+})

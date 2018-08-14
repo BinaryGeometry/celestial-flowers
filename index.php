@@ -8,6 +8,8 @@
 	    <!-- snwb-screensaver-styles -->
 	    <link rel="stylesheet" type="text/css" href="http://make.something/snwb-screensaver.css">
 	    <script src="http://make.something/d3/d3.min.js"></script>
+	    <script 
+src="http://make.something/bower_components/jquery/dist/jquery.min.js"></script>
 	    <!-- <script src="http://make.something/snwb-screensaver.js"></script> -->
 	    <!-- <script src="http://make.something/make.sacred.js"></script> -->
 		<script>
