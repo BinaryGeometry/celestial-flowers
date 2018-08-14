@@ -28,10 +28,12 @@ function seedingPlan(seeds){
 var plot
 = d3.select("#garden")
 .append("svg")
-.attr("width", 100)
-.attr("height", 100)
+.attr("width", 200)
+.attr("height", 200)
 
-cropRotation(plot);
+// cropRotation(plot);
+// ami.whatAmI();
+// var ami = new robot('ami');
 
 function plant(seeds, plot) {
 	var u = plot
@@ -63,7 +65,7 @@ function cropRotation(plot){
 		}
 		else {
 			season--;
-			if(season == 0){
+			if(season == 1){
 				oldYear = true
 			}
 		}
@@ -82,9 +84,7 @@ function robot(iAm){
     return {
     	whatAmI : this.whatAmI
     }
-};
-
-var ami = new robot('ami');
+}
 
 function makeSacred(radius){
 
@@ -155,4 +155,64 @@ function makeSacred(radius){
 	}
 }
 
-// ami.whatAmI();
+var groups = {
+	'one'   : [{name:'One'}],
+	'two'   : [{name:'One'},{name:'Two'}],
+	'three' : [{name:'One'},{name:'Two'},{name:'Three'}],
+	'four'  : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'}],
+	'five'  : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'}],
+	'six'   : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'}],
+	'seven' : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'}],
+	'eight' : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'}],
+	'nine'  : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'},{name:'Nine'}],
+	'ten'   : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'},{name:'Nine'},{name:'Ten'}],
+	'eleven': [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'},{name:'Nine'},{name:'Ten'},{name:'Eleven'}],
+	'twelve': [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'},{name:'Nine'},{name:'Ten'},{name:'Eleven'},{name:'Twelve'}]
+}
+
+/*
+https://www.mathsisfun.com/geometry/radians.html
+*/
+function buildGroup(dataSet, center){
+
+	var dataAry = [];
+
+	var noSections = dataSet.length;
+
+	var r = 10
+	var centerR = 10
+	var innerR  = 50
+	var outerR  = 75
+
+	var centerC = { cx:center.cx, cy:center.cx, r:centerR, stroke:'green', fill: 'transparent' }
+	var innerC  = { cx:center.cx, cy:center.cx, r:innerR, stroke:'green', fill: 'transparent' }
+	var outerC  = { cx:center.cx, cy:center.cy, r:outerR, stroke:'green', fill: 'transparent' } 
+
+	// Tjey are sick tunes
+	/*
+	Plot the inner and outer reference circles
+	*/
+	dataAry.push(centerC)
+	dataAry.push(innerC)
+	dataAry.push(outerC)
+
+	for (var i = noSections - 1; i >= 0; i--) {
+		// Where r is the radius, cx,cy the origin, and a the angle.
+		var x = center.cx + r * Math.cos(noSections/360);
+		var y = center.cy + r * Math.sin(noSections/360);
+
+		console.log('machine', dataSet[i])
+		// r = r + 5;
+		
+		dataAry.push( { cx:x, cy:x, r:r, stroke:'green', fill: 'transparent' } );
+	}
+	console.log('-', dataAry)
+	return dataAry;
+}
+
+plant(buildGroup(groups['two'], {cx:100, cy:100}), plot)
+
+// plant(seedingPlan(season), plot);
+
+// plant(buildGroup('six', groups, {cx:50, cy:50}), plot);
+
