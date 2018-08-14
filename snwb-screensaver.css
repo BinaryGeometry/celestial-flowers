@@ -1,3 +1,14 @@
 .snwb-widget.snwb-screensaver {
 	overflow: hidden;
 }
+#garden {
+	margin-bottom:20px;
+}
+.click {
+	border:2px solid white;
+	color:white;
+	text-decoration: none;
+}
+.click.active {
+	border:2px solid black;
+}

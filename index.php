@@ -24,10 +24,25 @@
 		<div class="col-sm-12">
 	        <section class="snwb-widget snwb-screensaver">
             	<center>
-            	<div id="garden" style="width:200px; border:1px solid #f7f4f0; height:200px;">
+            	<div id="garden" style="width:240px; border:1px solid #f7f4f0; height:240px;">
 				</div>
+
+	        	<a href="#" class="click" data-id="one">01</a>
+	        	<a href="#" class="click" data-id="two">02</a>
+	        	<a href="#" class="click" data-id="three">03</a>
+	        	<a href="#" class="click active" data-id="four">04</a>
+	        	<a href="#" class="click" data-id="five">05</a>
+	        	<a href="#" class="click" data-id="six">06</a>
+	        	<a href="#" class="click" data-id="seven">07</a>
+	        	<a href="#" class="click" data-id="eight">08</a>
+	        	<a href="#" class="click" data-id="nine">09</a>
+	        	<a href="#" class="click" data-id="ten">10</a>
+	        	<a href="#" class="click" data-id="eleven">11</a>
+	        	<a href="#" class="click" data-id="twelve">12</a>
+
             	</center>
         	</section>
+
 		</div>
 	</div>
 	<form method="post" id="qrForm">

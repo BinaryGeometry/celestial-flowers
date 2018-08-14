@@ -25,16 +25,6 @@ function seedingPlan(seeds){
 	]
 }
 
-var plot
-= d3.select("#garden")
-.append("svg")
-.attr("width", 200)
-.attr("height", 200)
-
-// cropRotation(plot);
-// ami.whatAmI();
-// var ami = new robot('ami');
-
 function plant(seeds, plot) {
 	var u = plot
 		.selectAll("circle")
@@ -45,9 +35,13 @@ function plant(seeds, plot) {
 		.attr("cx", function(d){ return d.cx; })
 		.attr("cy", function(d){ return d.cy; })
 		.attr("r", function(d){ return d.r; })
+		.attr("class", function(d) { return d3.select(this).attr("class") + " " + d; })
 		.style("stroke", function(d){ return d.stroke; }) 
 		.style('fill', function(d){ return d.fill; })
 	u.exit().remove();
+}
+
+function harvest(seeds, plot){
 }
 
 function cropRotation(plot){
@@ -155,25 +149,10 @@ function makeSacred(radius){
 	}
 }
 
-var groups = {
-	'one'   : [{name:'One'}],
-	'two'   : [{name:'One'},{name:'Two'}],
-	'three' : [{name:'One'},{name:'Two'},{name:'Three'}],
-	'four'  : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'}],
-	'five'  : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'}],
-	'six'   : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'}],
-	'seven' : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'}],
-	'eight' : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'}],
-	'nine'  : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'},{name:'Nine'}],
-	'ten'   : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'},{name:'Nine'},{name:'Ten'}],
-	'eleven': [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'},{name:'Nine'},{name:'Ten'},{name:'Eleven'}],
-	'twelve': [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'},{name:'Nine'},{name:'Ten'},{name:'Eleven'},{name:'Twelve'}]
-}
-
 /*
 https://www.mathsisfun.com/geometry/radians.html
 */
-function buildGroup(dataSet, center){
+function crop(name, dataSet, center){
 
 	var dataAry = [];
 
@@ -206,13 +185,86 @@ function buildGroup(dataSet, center){
 		
 		dataAry.push( { cx:x, cy:x, r:r, stroke:'green', fill: 'transparent' } );
 	}
-	console.log('-', dataAry)
+	// console.log('-', dataAry)
 	return dataAry;
 }
 
-plant(buildGroup(groups['two'], {cx:100, cy:100}), plot)
+// var plot
+// = d3.select("#garden")
+// .append("svg")
+// .attr("width", 200)
+// .attr("height", 200)
+
+// cropRotation(plot);
+// ami.whatAmI();
+// var ami = new robot('ami');
+
+/* // ############################################################################### */
+
+var groups = {
+	'one'   : [{name:'One'}],
+	'two'   : [{name:'One'},{name:'Two'}],
+	'three' : [{name:'One'},{name:'Two'},{name:'Three'}],
+	'four'  : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'}],
+	'five'  : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'}],
+	'six'   : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'}],
+	'seven' : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'}],
+	'eight' : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'}],
+	'nine'  : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'},{name:'Nine'}],
+	'ten'   : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'},{name:'Nine'},{name:'Ten'}],
+	'eleven': [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'},{name:'Nine'},{name:'Ten'},{name:'Eleven'}],
+	'twelve': [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'},{name:'Nine'},{name:'Ten'},{name:'Eleven'},{name:'Twelve'}]
+}
+
+
+// plant(crop('peas', groups['two'], {cx:100, cy:100}), plot)
 
 // plant(seedingPlan(season), plot);
 
 // plant(buildGroup('six', groups, {cx:50, cy:50}), plot);
 
+var dataset = [
+  { label: 'Bang Hai', count: 10 },
+  { label: 'Robotika', count: 20 },
+  { label: 'Town Hall', count: 30 },
+  { label: 'Sector 6', count: 40 }
+];
+
+var width = 240;
+var height = 240;
+var radius = Math.min(width, height) / 2;
+
+var color = d3.scaleOrdinal(d3.schemeCategory20b);
+// var color = d3.scaleOrdinal().range(['#A60F2B', '#648C85', '#B3F2C9', '#528C18', '#C3F25C']);
+
+// var svg = d3.select('#garden')
+//   .append('svg')
+//   .attr('width', width)
+//   .attr('height', height)
+// plot
+var svg = d3.select('#garden')
+  .append('svg')
+  .attr('width', width)
+  .attr('height', height)
+.append('g')
+// .attr('class', 'ti')
+.attr('transform', 'translate(' + (width / 2) +  ',' + (height / 2) + ')');
+
+var arc = d3.arc()
+  .innerRadius(0)
+  .outerRadius(radius);
+
+var pie = d3.pie()
+  .value(function(d) { return d.count; })
+  .sort(null);
+
+// var path = plot.select('svg')
+// var path = plot.select('svg')
+var path = svg.selectAll('g')
+  .data(pie(dataset))
+  .enter()
+  .append('path')
+  .attr('d', arc)
+  .attr('fill', function(d, i) {
+    return color(d.data.label);
+  });
