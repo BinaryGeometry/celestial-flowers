@@ -187,7 +187,6 @@ function crop(name, dataSet, center){
 	var sections = 3;
 
 	for (var i = l - 1; i >= 0; i--) {
-		console.log(i, 1 +1)
 		// console.log(dataSet);
 		// Where r is the radius, cx,cy the origin, and a the angle.
 		// var x = center.cx + r * Math.cos(noSections/360);
@@ -198,7 +197,7 @@ function crop(name, dataSet, center){
 		var x = center.cx + outerR * Math.cos(2 * Math.PI * i / sections);
 		var y = center.cy + outerR * Math.sin(2 * Math.PI * i / sections);
 		// $("#center").append("<div class='point' style='left:"+ x +"px;top:"+ y +"px'></div>");    
-
+		r = r * 1 + 5 ;
 		// dataAry.push( { cx:x, cy:x, r:r, stroke:'green', fill: 'transparent' } );
 		dataAry.push( { cx:center.cx, cy:center.cy, r:r, stroke:'green', fill: 'transparent' } );
 		// dataAry.push( { cx:x, cy:x, r:r, stroke:'green', fill: 'transparent' } );
@@ -211,12 +210,15 @@ function crop(name, dataSet, center){
 		// console.log('machine lives', dataSet[i])
 		dataCoords.push(dataSet[i]);
 	}
-	// console.log('-', dataAry)
-	// return dataAry;
-	return {
-		dataAry: dataAry,
-		dataCoords: dataCoords
-	};
+
+	console.log('-', dataAry)
+	console.log('-', dataCoords)
+	
+	// return {
+		// dataAry: dataAry,
+		// dataCoords: dataCoords
+	// };
+	return dataAry;
 }
 
 Math.degrees = function(rad)
