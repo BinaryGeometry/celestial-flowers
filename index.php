@@ -78,6 +78,8 @@
 <script>
 
 
+// plant(crop('peas', groups['five'], {cx:100, cy:100}), svg2)
+// plant(crop('peas', groups['four'], {cx:100, cy:100}), svg2)
 plant(crop('peas', groups['three'], {cx:100, cy:100}), svg2)
 
 /*

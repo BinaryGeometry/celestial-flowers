@@ -171,11 +171,14 @@ function crop(name, dataSet, center){
 	/*
 	Plot the inner and outer reference circles
 	*/
-	dataAry.push(centerC)
-	dataAry.push(innerC)
-	dataAry.push(outerC)
+	// dataAry.push(centerC)
+	// dataAry.push(innerC)
+	// dataAry.push(outerC)
 
-	for (var i = noSections - 1; i >= 0; i--) {
+	var sections = 19
+
+	for (var i = sections - 1; i >= 0; i--) {
+
 		// Where r is the radius, cx,cy the origin, and a the angle.
 		// var x = center.cx + r * Math.cos(noSections/360);
 		// var y = center.cy + r * Math.sin(noSections/360);
@@ -184,8 +187,8 @@ function crop(name, dataSet, center){
 
 		var items = 4;
 
-		var x = center.cx + outerR * Math.cos(2 * Math.PI * i / noSections);
-		var y = center.cy + outerR * Math.sin(2 * Math.PI * i / noSections);   
+		var x = center.cx + outerR * Math.cos(2 * Math.PI * i / sections);
+		var y = center.cy + outerR * Math.sin(2 * Math.PI * i / sections);   
 		// $("#center").append("<div class='point' style='left:"+ x +"px;top:"+ y +"px'></div>");    
 
 		// r = r + 5;
