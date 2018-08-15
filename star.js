@@ -177,10 +177,17 @@ function crop(name, dataSet, center){
 
 	for (var i = noSections - 1; i >= 0; i--) {
 		// Where r is the radius, cx,cy the origin, and a the angle.
-		var x = center.cx + r * Math.cos(noSections/360);
-		var y = center.cy + r * Math.sin(noSections/360);
+		// var x = center.cx + r * Math.cos(noSections/360);
+		// var y = center.cy + r * Math.sin(noSections/360);
 
 		console.log('machine', dataSet[i])
+
+		var items = 4;
+
+		var x = center.cx + outerR * Math.cos(2 * Math.PI * i / noSections);
+		var y = center.cy + outerR * Math.sin(2 * Math.PI * i / noSections);   
+		// $("#center").append("<div class='point' style='left:"+ x +"px;top:"+ y +"px'></div>");    
+
 		// r = r + 5;
 		
 		dataAry.push( { cx:x, cy:x, r:r, stroke:'green', fill: 'transparent' } );
@@ -243,7 +250,7 @@ var data = {
 
 var width = 240;
 var height = 240;
-var radius = Math.min(width, height) / 2;
+var radius = Math.min(width, height) / 2; 
 
 var color = d3.scaleOrdinal(d3.schemeCategory20b);
 
@@ -277,19 +284,17 @@ var pie = d3.pie()
   .value(function(d) { return d.count; })
   .sort(null);
 
-// var path = plot.select('svg')
-// var path = plot.select('svg')
 var path = svg.selectAll('g')
   .data(pie(dataset));
 
-path
-.enter()
-.append('path')
-.attr('d', arc)
-.attr("transform", "translate(120,120)")
-.attr('fill', function(d, i) {
-	return color(d.data.label);
-});
+// path
+// .enter()
+// .append('path')
+// .attr('d', arc)
+// .attr("transform", "translate(120,120)")
+// .attr('fill', function(d, i) {
+// 	return color(d.data.label);
+// });
 
 
 function piez(seeds, plot) {
@@ -346,5 +351,3 @@ function repaintGraph(e) {
 	piez(pie(dataset)
 		, svg)
 }
-
-// plant(crop('peas', groups['two'], {cx:100, cy:100}), plot)

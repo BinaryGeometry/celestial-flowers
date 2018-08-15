@@ -73,5 +73,40 @@
 		create signup -->
 	</form>
 <script src="http://make.something/star.js"></script>
+<!-- <script src="http://make.something/bar.js"></script> -->
+<!-- <script src="http://make.something/boom.js"></script> -->
+<script>
+
+
+plant(crop('peas', groups['three'], {cx:100, cy:100}), svg2)
+
+/*
+
+var Hours = {
+	'one'   : [{name:'One'}],
+	'two'   : [{name:'One'},{name:'Two'}],
+	'three' : [{name:'One'},{name:'Two'},{name:'Three'}],
+	'four'  : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'}],
+	'five'  : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'}],
+	'six'   : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'}],
+	'seven' : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'}],
+	'eight' : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'}],
+	'nine'  : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'},{name:'Nine'}],
+	'ten'   : [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'},{name:'Nine'},{name:'Ten'}],
+	'eleven': [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'},{name:'Nine'},{name:'Ten'},{name:'Eleven'}],
+	'twelve': [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'},{name:'Nine'},{name:'Ten'},{name:'Eleven'},{name:'Twelve'}]
+}
+
+var clock = new Clock({
+    element: document.querySelector('#garden'),
+    data: Hours,
+    size:240
+});
+
+// clock.begin(4);
+*/
+
+</script>
+
 </body>
 </html>
