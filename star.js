@@ -154,7 +154,10 @@ https://www.mathsisfun.com/geometry/radians.html
 */
 function crop(name, dataSet, center){
 
+	console.log('dataset', dataset);
+
 	var dataAry = [];
+	var dataCoords = [];
 
 	var noSections = dataSet.length;
 
@@ -171,14 +174,16 @@ function crop(name, dataSet, center){
 	/*
 	Plot the inner and outer reference circles
 	*/
-	// dataAry.push(centerC)
-	// dataAry.push(innerC)
-	// dataAry.push(outerC)
+
+	dataAry.push(centerC)
+	dataAry.push(innerC)
+	dataAry.push(outerC)
 
 	var sections = 19;
 
 	for (var i = sections - 1; i >= 0; i--) {
 
+	console.log(dataSet);
 		// Where r is the radius, cx,cy the origin, and a the angle.
 		// var x = center.cx + r * Math.cos(noSections/360);
 		// var y = center.cy + r * Math.sin(noSections/360);
@@ -193,8 +198,17 @@ function crop(name, dataSet, center){
 		dataAry.push( { cx:center.cx, cy:center.cy, r:r, stroke:'green', fill: 'transparent' } );
 		// dataAry.push( { cx:x, cy:x, r:r, stroke:'green', fill: 'transparent' } );
 	}
+	for (var i = sections.length - 1; i >= 0; i--) {
+		// var r 		dataCoords.push({}
+		// dataAry[i].r = i * r;
+		console.log(dataSet[i].name)
+	}
 	// console.log('-', dataAry)
 	return dataAry;
+	// return {
+		// dataAry: dataAry,
+		// dataCoords: dataCoords
+	// };
 }
 
 // var plot
