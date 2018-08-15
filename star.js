@@ -158,10 +158,10 @@ function crop(name, dataSet, center){
 
 	var noSections = dataSet.length;
 
-	var r = 10
-	var centerR = 10
-	var innerR  = 50
-	var outerR  = 75
+	var r = 10;
+	var centerR = 5;
+	var innerR  = 50;
+	var outerR  = 75;
 
 	var centerC = { cx:center.cx, cy:center.cx, r:centerR, stroke:'green', fill: 'transparent' }
 	var innerC  = { cx:center.cx, cy:center.cx, r:innerR, stroke:'green', fill: 'transparent' }
@@ -175,7 +175,7 @@ function crop(name, dataSet, center){
 	// dataAry.push(innerC)
 	// dataAry.push(outerC)
 
-	var sections = 19
+	var sections = 19;
 
 	for (var i = sections - 1; i >= 0; i--) {
 
@@ -185,15 +185,13 @@ function crop(name, dataSet, center){
 
 		console.log('machine', dataSet[i])
 
-		var items = 4;
-
 		var x = center.cx + outerR * Math.cos(2 * Math.PI * i / sections);
-		var y = center.cy + outerR * Math.sin(2 * Math.PI * i / sections);   
+		var y = center.cy + outerR * Math.sin(2 * Math.PI * i / sections);
 		// $("#center").append("<div class='point' style='left:"+ x +"px;top:"+ y +"px'></div>");    
 
-		// r = r + 5;
-		
-		dataAry.push( { cx:x, cy:x, r:r, stroke:'green', fill: 'transparent' } );
+		// dataAry.push( { cx:x, cy:x, r:r, stroke:'green', fill: 'transparent' } );
+		dataAry.push( { cx:center.cx, cy:center.cy, r:r, stroke:'green', fill: 'transparent' } );
+		// dataAry.push( { cx:x, cy:x, r:r, stroke:'green', fill: 'transparent' } );
 	}
 	// console.log('-', dataAry)
 	return dataAry;
