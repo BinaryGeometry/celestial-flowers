@@ -300,11 +300,17 @@ function piez(seeds, plot) {
 		.append('path')
 		.merge(u)
 		.attr('d', arc)
-		.attr("transform", "translate(120,120)")
+		.attr("transform", transformCenter)
 		.attr('fill', function(d, i) {
 			return color(d.data.label);
 		});
 	u.exit().remove();
+}
+
+function transformCenter(){
+	var xt = width/2;
+	var yt = height/2;
+	return "translate("+xt+","+yt+")";
 }
 
 
