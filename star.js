@@ -192,14 +192,17 @@ function crop(name, dataSet, center){
 // var plot
 // = d3.select("#garden")
 // .append("svg")
-// .attr("width", 200)
-// .attr("height", 200)
+// .attr("width", 240)
+// .attr("height", 240)
 
 // cropRotation(plot);
+
 // ami.whatAmI();
 // var ami = new robot('ami');
 
 /* // ############################################################################### */
+
+// https://grokbase.com/t/gg/d3-js/1336cnkbkw/an-idiots-guide-to-arc-transitions
 
 var groups = {
 	'one'   : [{name:'One'}],
@@ -216,25 +219,34 @@ var groups = {
 	'twelve': [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'},{name:'Nine'},{name:'Ten'},{name:'Eleven'},{name:'Twelve'}]
 }
 
-
 // plant(crop('peas', groups['two'], {cx:100, cy:100}), plot)
-
 // plant(seedingPlan(season), plot);
-
 // plant(buildGroup('six', groups, {cx:50, cy:50}), plot);
 
 var dataset = [
-  { label: 'Bang Hai', count: 10 },
+  { label: 'Bang Hai', count: 20 },
+  { label: 'Lions den', count: 20 },
+  { label: 'Crew', count: 20 },
   { label: 'Robotika', count: 20 },
-  { label: 'Town Hall', count: 30 },
-  { label: 'Sector 6', count: 40 }
+  { label: 'Town Hall', count: 20 },
+  { label: 'Sector 6', count: 20 }
 ];
+
+var data = {
+	set1: [{ label: 'Bang Hai', count: 20 }],
+	set2: [{ label: 'Bang Hai', count: 20 },{ label: 'Lions den', count: 20 }],
+	set3: [{ label: 'Bang Hai', count: 20 },{ label: 'Lions den', count: 20 },{ label: 'Crew', count: 20 }],
+	set4: [{ label: 'Bang Hai', count: 20 },{ label: 'Lions den', count: 20 },{ label: 'Crew', count: 20 },{ label: 'Robotika', count: 20 }],
+	set5: [{ label: 'Bang Hai', count: 20 },{ label: 'Lions den', count: 20 },{ label: 'Crew', count: 20 },{ label: 'Robotika', count: 20 },{ label: 'Town Hall', count: 20 }],
+	set6: [{ label: 'Bang Hai', count: 20 },{ label: 'Lions den', count: 20 },{ label: 'Crew', count: 20 },{ label: 'Robotika', count: 20 },{ label: 'Town Hall', count: 20 },{ label: 'Sector 6', count: 20 }]
+}
 
 var width = 240;
 var height = 240;
 var radius = Math.min(width, height) / 2;
 
 var color = d3.scaleOrdinal(d3.schemeCategory20b);
+
 // var color = d3.scaleOrdinal().range(['#A60F2B', '#648C85', '#B3F2C9', '#528C18', '#C3F25C']);
 
 // var svg = d3.select('#garden')
@@ -242,13 +254,20 @@ var color = d3.scaleOrdinal(d3.schemeCategory20b);
 //   .attr('width', width)
 //   .attr('height', height)
 // plot
+
 var svg = d3.select('#garden')
   .append('svg')
   .attr('width', width)
-  .attr('height', height)
-.append('g')
-// .attr('class', 'ti')
-.attr('transform', 'translate(' + (width / 2) +  ',' + (height / 2) + ')');
+  .attr('height', height);
+
+var svg2 = d3.select('#garden')
+  .append('svg')
+  .attr('width', width)
+  .attr('height', height);
+
+// svg.append('g')
+// // .attr('class', 'ti')
+// // .attr('transform', 'translate(' + (width / 2) +  ',' + (height / 2) + ')');
 
 var arc = d3.arc()
   .innerRadius(0)
@@ -261,22 +280,65 @@ var pie = d3.pie()
 // var path = plot.select('svg')
 // var path = plot.select('svg')
 var path = svg.selectAll('g')
-  .data(pie(dataset))
-  .enter()
-  .append('path')
-  .attr('d', arc)
-  .attr('fill', function(d, i) {
-    return color(d.data.label);
-  });
+  .data(pie(dataset));
+
+path
+.enter()
+.append('path')
+.attr('d', arc)
+.attr("transform", "translate(120,120)")
+.attr('fill', function(d, i) {
+	return color(d.data.label);
+});
 
 
-$('.click').on('click', function(){
-	
+function piez(seeds, plot) {
+	var u = plot
+		.selectAll("path")
+		.data(seeds);
+	u.enter()
+		.append('path')
+		.merge(u)
+		.attr('d', arc)
+		.attr("transform", "translate(120,120)")
+		.attr('fill', function(d, i) {
+			return color(d.data.label);
+		});
+	u.exit().remove();
+}
+
+
+$('.click').on('click', repaintGraph);
+
+$('.color').on('click', colorGraph)
+
+function colorGraph(e) {
+
+	e.preventDefault();
+	var $t = $(this);
+	var color = $t.attr('data-splice');
+	$('.color.active').removeClass('active');
+	$t.addClass('active');
+	console.log('dsf', color);
+	// .duration(1000).attr('width', 250);
+	// path.transition
+}
+
+function repaintGraph(e) {
+
+	e.preventDefault();
+
 	var $t = $(this);
 
-	var dataId = $t.attr('data-id');
+	var dataID = $t.attr('data-splice');
+
+	var dataset = data[dataID];
 
 	$('.click.active').removeClass('active');
-
 	$t.addClass('active');
-})
+	
+	piez(pie(dataset)
+		, svg)
+}
+
+// plant(crop('peas', groups['two'], {cx:100, cy:100}), plot)

@@ -3,6 +3,12 @@
 }
 #garden {
 	margin-bottom:20px;
+	position: relative;
+}
+#garden svg {
+	position: absolute;
+	top:0;
+	left:0;
 }
 .click {
 	border:2px solid white;
@@ -10,5 +16,14 @@
 	text-decoration: none;
 }
 .click.active {
+	border:2px solid black;
+}
+
+.color {
+	border:2px solid white;
+	color:white;
+	text-decoration: none;
+}
+.color.active {
 	border:2px solid black;
 }
