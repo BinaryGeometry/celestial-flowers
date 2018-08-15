@@ -154,17 +154,23 @@ https://www.mathsisfun.com/geometry/radians.html
 */
 function crop(name, dataSet, center){
 
-	console.log('dataset', dataset);
+	var name    = name;
+	var dataSet = dataSet;
+	var center  = center;
 
 	var dataAry = [];
 	var dataCoords = [];
 
-	var noSections = dataSet.length;
-
+	var l = dataSet.length;
 	var r = 10;
 	var centerR = 5;
 	var innerR  = 50;
 	var outerR  = 75;
+	var angleDegrees = 360 / l;
+	var angleRadians = Math.radians(angleDegrees);
+
+	console.log('deg', angleDegrees);
+	console.log('rad', angleRadians);
 
 	var centerC = { cx:center.cx, cy:center.cx, r:centerR, stroke:'green', fill: 'transparent' }
 	var innerC  = { cx:center.cx, cy:center.cx, r:innerR, stroke:'green', fill: 'transparent' }
@@ -174,21 +180,20 @@ function crop(name, dataSet, center){
 	/*
 	Plot the inner and outer reference circles
 	*/
-
 	dataAry.push(centerC)
 	dataAry.push(innerC)
 	dataAry.push(outerC)
 
-	var sections = 19;
+	var sections = 3;
 
-	for (var i = sections - 1; i >= 0; i--) {
-
-	console.log(dataSet);
+	for (var i = l - 1; i >= 0; i--) {
+		console.log(i, 1 +1)
+		// console.log(dataSet);
 		// Where r is the radius, cx,cy the origin, and a the angle.
 		// var x = center.cx + r * Math.cos(noSections/360);
 		// var y = center.cy + r * Math.sin(noSections/360);
 
-		console.log('machine', dataSet[i])
+		// console.log('machine', dataSet[i])
 
 		var x = center.cx + outerR * Math.cos(2 * Math.PI * i / sections);
 		var y = center.cy + outerR * Math.sin(2 * Math.PI * i / sections);
@@ -198,18 +203,31 @@ function crop(name, dataSet, center){
 		dataAry.push( { cx:center.cx, cy:center.cy, r:r, stroke:'green', fill: 'transparent' } );
 		// dataAry.push( { cx:x, cy:x, r:r, stroke:'green', fill: 'transparent' } );
 	}
-	for (var i = sections.length - 1; i >= 0; i--) {
+
+	// console.log('pre for loop', sections)
+	for (var i = sections - 1; i >= 0; i--) {
 		// var r 		dataCoords.push({}
 		// dataAry[i].r = i * r;
-		console.log(dataSet[i].name)
+		// console.log('machine lives', dataSet[i])
+		dataCoords.push(dataSet[i]);
 	}
 	// console.log('-', dataAry)
-	return dataAry;
-	// return {
-		// dataAry: dataAry,
-		// dataCoords: dataCoords
-	// };
+	// return dataAry;
+	return {
+		dataAry: dataAry,
+		dataCoords: dataCoords
+	};
 }
+
+Math.degrees = function(rad)
+ {
+ return rad*(180/Math.PI);
+ }
+ 
+Math.radians = function(deg)
+ {
+ return deg * (Math.PI/180);
+ }
 
 // var plot
 // = d3.select("#garden")

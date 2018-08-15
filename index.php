@@ -80,11 +80,9 @@
 
 // plant(crop('peas', groups['five'], {cx:100, cy:100}), svg2)
 // plant(crop('peas', groups['four'], {cx:100, cy:100}), svg2)
-plant(crop('peas', groups['three'], {cx:100, cy:100}), svg2)
 
-/*
 
-var Hours = {
+var hours = {
 	'one'   : [{name:'One'}],
 	'two'   : [{name:'One'},{name:'Two'}],
 	'three' : [{name:'One'},{name:'Two'},{name:'Three'}],
@@ -99,12 +97,16 @@ var Hours = {
 	'twelve': [{name:'One'},{name:'Two'},{name:'Three'},{name:'Four'},{name:'Five'},{name:'Six'},{name:'Seven'},{name:'Eight'},{name:'Nine'},{name:'Ten'},{name:'Eleven'},{name:'Twelve'}]
 }
 
-var clock = new Clock({
-    element: document.querySelector('#garden'),
-    data: Hours,
-    size:240
-});
+plant(crop('peas', hours['six'], {cx:100, cy:100}), svg2);
 
+
+// var clock = new Clock({
+//     element: document.querySelector('#garden'),
+//     data: Hours,
+//     size:240
+// });
+
+/*
 // clock.begin(4);
 */
 
