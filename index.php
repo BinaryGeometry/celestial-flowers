@@ -25,12 +25,12 @@
 				<div id="garden" style="width:240px; border:1px solid #f7f4f0; height:240px;">
 				</div>
 
-				<a href="#" class="click" data-splice="set1">01</a>
-				<a href="#" class="click" data-splice="set2">02</a>
-				<a href="#" class="click" data-splice="set3">03</a>
-				<a href="#" class="click" data-splice="set4">04</a>
-				<a href="#" class="click" data-splice="set5">05</a>
-				<a href="#" class="click active" data-splice="set6">06</a>
+				<a href="#" class="click" data-splice="1">01</a>
+				<a href="#" class="click" data-splice="2">02</a>
+				<a href="#" class="click" data-splice="3">03</a>
+				<a href="#" class="click" data-splice="4">04</a>
+				<a href="#" class="click" data-splice="5">05</a>
+				<a href="#" class="click active" data-splice="6">06</a>
 
 				<!-- <a href="#" class="click" data-id="seven">07</a> -->
 				<!-- <a href="#" class="click" data-id="eight">08</a> -->
@@ -38,7 +38,7 @@
 				<!-- <a href="#" class="click" data-id="ten">10</a> -->
 				<!-- <a href="#" class="click" data-id="eleven">11</a> -->
 				<!-- <a href="#" class="click" data-id="twelve">12</a> -->
-				
+
 				<a href="#" class="color" data-splice="red" style="background:red;">**</a>
 				<a href="#" class="color" data-splice="gold" style="background:gold;">**</a>
 				<a href="#" class="color active" data-splice="blue" style="background:blue;">**</a>
@@ -77,12 +77,7 @@
 	<script src="http://make.something/js/library.js"></script>
 	<script src="http://make.something/js/application.js"></script>
 	<script src="http://make.something/js/controllers.js"></script>
-
-	<script>
-
-
-
-	</script>
+	<!-- <script></script> -->
 
 </body>
 </html>

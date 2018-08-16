@@ -1,5 +1,7 @@
 /* // ############################################################################### */
 // https://grokbase.com/t/gg/d3-js/1336cnkbkw/an-idiots-guide-to-arc-transitions
+// https://bl.ocks.org/mbostock/3e961b4c97a1b543fff2
+// http://bl.ocks.org/mbostock/5100636
 
 var width = 240;
 var height = 240;
@@ -15,9 +17,6 @@ var pie = d3.pie()
 
 // var path = svg.selectAll('g')
 //   .data(pie(dataset));
-
-
-
 
 function plant(seeds, plot) {
 	var u = plot
@@ -91,5 +90,3 @@ function Crop(name, dataSet, centerCoords, opts){
 	
 	return dataAry;
 }
-
-
