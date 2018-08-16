@@ -180,48 +180,77 @@ function crop(name, dataSet, center){
 	/*
 	Plot the inner and outer reference circles
 	*/
+	var colors = ['green','gold','red','blue','purple','pink','lightgreen','orange','darkred','darkgreen','magenta','electricpink']
+
+	points = 20
+	radius = 10
+	center = {x: center.cx, y: center.cy}
+
+	function drawCirclePoints(points, radius, center){
+		var datanodes = []
+		let slice = 2 * Math.PI / points
+		for (var i = points - 1; i >= 0; i--) {
+			let zangle = slice * i
+			let newX = center.x + radius * Math.cos(zangle)
+			let newY = center.y + radius * Math.sin(zangle)
+			let point = {cx: newX, cy: newY, r:centerR, stroke:'green', fill: 'transparent' }
+			console.log(point)
+			datanodes.push(point)
+			dataAry.push(point)
+		}
+		console.log('nodes', datanodes)
+		return datanodes;
+	}
+
+	drawCirclePoints(points, radius, center)
+
 	dataAry.push(centerC)
 	dataAry.push(innerC)
 	dataAry.push(outerC)
 
-	var sections = 3;
-	var angle = 0;
-	var angleRef = angleRadians;
+	// var sections = 4;
+	// var angle = 0;
+	// var angleRef = angleRadians;
 
+	// one = {cx: center.cx + 0, cy: center.cy + innerR, r:r, stroke:'green', fill: 'transparent'}
+	// dataAry.push(one)
+	// two = {cx: center.cx + 0, cy: center.cy - innerR, r:r, stroke:'green', fill: 'transparent'}
+	// dataAry.push(two)
 
-	for (var i = l - 1; i >= 0; i--) {
-		console.log('opopop', i / sections );
-		// Where r is the radius, cx,cy the origin, and a the angle.
-		// var x = center.cx + r * Math.cos(noSections/360);
-		// var y = center.cy + r * Math.sin(noSections/360);
+	// for (var i = l - 1; i >= 0; i--) {
+	// 	console.log('opopop', i / sections );
+	// 	// Where r is the radius, cx,cy the origin, and a the angle.
+	// 	// var x = center.cx + r * Math.cos(noSections/360);
+	// 	// var y = center.cy + r * Math.sin(MathnoSections/360);
 
-		// console.log('machine', dataSet[i])
+	// 	// console.log('machine', dataSet[i])
 
-		var x = center.cx + outerR * Math.cos(2 * Math.PI * angle);
-		var y = center.cy + outerR * Math.sin(2 * Math.PI * angle);
+	// 	var x = center.cx + outerR * Math.cos(i / sections);
+	// 	var y = center.cy + outerR * Math.sin(i / sections);
 		
-		angle = angle + angleRef;
+	// 	// i / sections = angle + angleRef;
 
-		// var x = r*cos(ohm)
-		// var y = r*sin(ohm)
+	// 	// var x = r*cos(ohm)
+	// 	// var y = r*sin(ohm)
 
-		// $("#center").append("<div class='point' style='left:"+ x +"px;top:"+ y +"px'></div>");    
+	// 	// $("#center").append("<div class='point' style='left:"+ x +"px;top:"+ y +"px'></div>");    
 		
-		r = r * 1 + 5 ;
+	// 	// r = r * 1 + 5 ;
 
-		// dataAry.push( { cx:x, cy:x, r:r, stroke:'green', fill: 'transparent' } );
-		// dataAry.push( { cx:center.cx, cy:center.cy, r:r, stroke:'green', fill: 'transparent' } );
-		// dataAry.push( { cx:center.cx, cy:center.cy, r:r, stroke:'green', fill: 'transparent' } );
-		dataAry.push( { cx:x, cy:x, r:r, stroke:'green', fill: 'transparent' } );
-	}
+	// 	// dataAry.push( { cx:x, cy:x, r:r, stroke:'green', fill: 'transparent' } );
+	// 	// dataAry.push( { cx:center.cx, cy:center.cy, r:r, stroke:'green', fill: 'transparent' } );
+	// 	// dataAry.push( { cx:center.cx, cy:center.cy, r:r, stroke:'green', fill: 'transparent' } );
+	// 	// dataAry.push( { cx:x, cy:x, r:r, stroke:'green', fill: 'transparent' } );
+	// 	dataAry.push( { cx:x, cy:x, r:r, stroke:'green', fill: colors[i] } );
+	// }
 
-	// console.log('pre for loop', sections)
-	for (var i = sections - 1; i >= 0; i--) {
-		// var r 		dataCoords.push({}
-		// dataAry[i].r = i * r;
-		// console.log('machine lives', dataSet[i])
-		dataCoords.push(dataSet[i]);
-	}
+	// // console.log('pre for loop', sections)
+	// for (var i = sections - 1; i >= 0; i--) {
+	// 	// var r 		dataCoords.push({}
+	// 	// dataAry[i].r = i * r;
+	// 	// console.log('machine lives', dataSet[i])
+	// 	dataCoords.push(dataSet[i]);
+	// }
 
 	console.log('-', dataAry)
 	console.log('-', dataCoords)
