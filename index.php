@@ -80,36 +80,7 @@
 
 	<script>
 
-		// page specific code goes here
 
-		var svg = d3.select('#garden')
-		  .append('svg')
-		  .attr('width', width)
-		  .attr('height', height);
-
-		var svg2 = d3.select('#garden')
-		  .append('svg')
-		  .attr('width', width)
-		  .attr('height', height);
-
-		plant(crop('peas', hours['six'], {cx:100, cy:100}), svg2);
-
-		// UI controller actions
-		$('.click').on('click', repaintGraph);
-
-		$('.color').on('click', colorGraph)
-
-		// var plant = new Plant({
-		//     element: document.querySelector('#garden'),
-		//     data: Hours,
-		//     size:240
-		// });
-
-		/*
-		// clock.begin(4);
-		*/
-
-		// var ami = new robot('ami');
 
 	</script>
 
