@@ -66,9 +66,9 @@ function Crop(name, dataSet, centerCoords, opts){
 	var radius = r;
 
 	if(showGuides)
-		dataAry.push({ cx:center.cx, cy:center.cx, r:centerR, stroke:guideColor, fill: 'transparent' })
-		dataAry.push({ cx:center.cx, cy:center.cx, r:innerR, stroke:guideColor, fill: 'transparent' })
-		dataAry.push({ cx:center.cx, cy:center.cy, r:outerR, stroke:guideColor, fill: 'transparent' })
+		dataAry.push({ cx:center.x, cy:center.y, r:centerR, stroke:guideColor, fill: 'transparent' })
+		dataAry.push({ cx:center.x, cy:center.y, r:innerR, stroke:guideColor, fill: 'transparent' })
+		dataAry.push({ cx:center.x, cy:center.y, r:outerR, stroke:guideColor, fill: 'transparent' })
 
 	function drawCirclePoints(points, radius, center){
 		var datanodes = []
@@ -77,13 +77,27 @@ function Crop(name, dataSet, centerCoords, opts){
 			let zangle = slice * i
 			let newX = center.x + radius * Math.cos(zangle)
 			let newY = center.y + radius * Math.sin(zangle)
-			let point = {cx: newX, cy: newY, r:centerR, stroke:'green', fill: 'transparent' }
+			var rrrr = centerRspiral(centerR, i, 'r+(r*1.5)');
+			// let point = {cx: newX, cy: newY, r:centerR, stroke:'green', fill: 'transparent' }
+			let point = {cx: newX, cy: newY, r:rrrr, stroke:'green', fill: 'transparent' }
 			console.log(point)
 			datanodes.push(point)
 			dataAry.push(point)
 		}
 		console.log('nodes', datanodes)
 		return datanodes;
+	}
+
+	function centerRspiral(r, i, toEval){
+
+		var r = r;
+		var i = i;
+
+		console.log(r * 1);
+
+		return r * i;
+		// return eval(toEval);
+		// return eval(toEval);
 	}
 
 	drawCirclePoints (points, radius, center)
