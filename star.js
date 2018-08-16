@@ -185,22 +185,34 @@ function crop(name, dataSet, center){
 	dataAry.push(outerC)
 
 	var sections = 3;
+	var angle = 0;
+	var angleRef = angleRadians;
+
 
 	for (var i = l - 1; i >= 0; i--) {
-		// console.log(dataSet);
+		console.log('opopop', i / sections );
 		// Where r is the radius, cx,cy the origin, and a the angle.
 		// var x = center.cx + r * Math.cos(noSections/360);
 		// var y = center.cy + r * Math.sin(noSections/360);
 
 		// console.log('machine', dataSet[i])
 
-		var x = center.cx + outerR * Math.cos(2 * Math.PI * i / sections);
-		var y = center.cy + outerR * Math.sin(2 * Math.PI * i / sections);
+		var x = center.cx + outerR * Math.cos(2 * Math.PI * angle);
+		var y = center.cy + outerR * Math.sin(2 * Math.PI * angle);
+		
+		angle = angle + angleRef;
+
+		// var x = r*cos(ohm)
+		// var y = r*sin(ohm)
+
 		// $("#center").append("<div class='point' style='left:"+ x +"px;top:"+ y +"px'></div>");    
+		
 		r = r * 1 + 5 ;
+
 		// dataAry.push( { cx:x, cy:x, r:r, stroke:'green', fill: 'transparent' } );
-		dataAry.push( { cx:center.cx, cy:center.cy, r:r, stroke:'green', fill: 'transparent' } );
-		// dataAry.push( { cx:x, cy:x, r:r, stroke:'green', fill: 'transparent' } );
+		// dataAry.push( { cx:center.cx, cy:center.cy, r:r, stroke:'green', fill: 'transparent' } );
+		// dataAry.push( { cx:center.cx, cy:center.cy, r:r, stroke:'green', fill: 'transparent' } );
+		dataAry.push( { cx:x, cy:x, r:r, stroke:'green', fill: 'transparent' } );
 	}
 
 	// console.log('pre for loop', sections)
