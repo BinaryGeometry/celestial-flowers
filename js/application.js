@@ -78,7 +78,8 @@ function Crop(name, dataSet, centerCoords, opts){
 			let zangle = slice * i
 			let newX = center.x + radius * Math.cos(zangle)
 			let newY = center.y + radius * Math.sin(zangle)
-			var rrrr = centerRspiral(centerR, i, 'r+(r*1.5)');
+			// var rrrr = centerRspiral(centerR, i, 'r+(r*1.5-r)');
+			var rrrr = centerRspiral(centerR, i, 'r+(i*i)');
 			// let point = {cx: newX, cy: newY, r:centerR, stroke:'green', fill: 'transparent' }
 			let point = {cx: newX, cy: newY, r:rrrr, stroke:'green', fill: 'transparent' }
 			console.log(point)
@@ -96,8 +97,9 @@ function Crop(name, dataSet, centerCoords, opts){
 
 		console.log(r * 1);
 
-		return r * i;
-		// return eval(toEval);
+		// return r * i;
+		// return r;
+		return eval(toEval);
 		// return eval(toEval);
 	}
 
