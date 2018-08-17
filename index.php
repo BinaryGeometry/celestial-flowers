@@ -1,4 +1,4 @@
-<?php 
+// <?php 
 
 	// const ASSET_DIR = '';
 ?>
@@ -28,16 +28,16 @@
 				<a href="#" class="click" data-splice="1">01</a>
 				<a href="#" class="click" data-splice="2">02</a>
 				<a href="#" class="click" data-splice="3">03</a>
-				<a href="#" class="click" data-splice="4">04</a>
+				<a href="#" class="click active" data-splice="4">04</a>
 				<a href="#" class="click" data-splice="5">05</a>
-				<a href="#" class="click active" data-splice="6">06</a>
+				<a href="#" class="click" data-splice="6">06</a>
 
-				<!-- <a href="#" class="click" data-id="seven">07</a> -->
-				<!-- <a href="#" class="click" data-id="eight">08</a> -->
-				<!-- <a href="#" class="click" data-id="nine">09</a> -->
-				<!-- <a href="#" class="click" data-id="ten">10</a> -->
-				<!-- <a href="#" class="click" data-id="eleven">11</a> -->
-				<!-- <a href="#" class="click" data-id="twelve">12</a> -->
+				<a href="#" class="click" data-splice="7">07</a>
+				<a href="#" class="click" data-splice="8">08</a>
+				<a href="#" class="click" data-splice="9">09</a>
+				<a href="#" class="click" data-splice="10">10</a>
+				<a href="#" class="click" data-splice="11">11</a>
+				<a href="#" class="click" data-splice="12">12</a>
 
 				<a href="#" class="color" data-splice="red" style="background:red;">**</a>
 				<a href="#" class="color" data-splice="gold" style="background:gold;">**</a>

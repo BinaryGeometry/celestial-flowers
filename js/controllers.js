@@ -57,14 +57,26 @@ function repaintGraph(e) {
 		// plant(crop('peas', hours['six'], {cx:100, cy:100}), svg2);
 
 		// new Field()
+		var crop = new Crop('peas', 4, centerNode, opts);
+		plant(crop, field);
 
 		// UI controller actions
-		// $('.click').on('click', function(){
+		$('.click').on('click', function(e){
 
-		var crop = new Crop('peas', hours['nine'], centerNode, opts);
-		
-		plant(crop, field);
-		// });
+			e.preventDefault();
+
+			var $t = $(this);
+
+			var dataID = $t.attr('data-splice');
+
+			var crop = new Crop('peas', dataID, centerNode, opts);
+
+			plant(crop, field);
+
+			$('.click.active').removeClass('active');
+			$t.addClass('active');
+		});
+
 		// $('.color').on('click', updatePattern);
 		/*
 		// clock.begin(4);

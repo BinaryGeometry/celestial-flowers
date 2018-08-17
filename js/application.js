@@ -43,14 +43,15 @@ function Crop(name, dataSet, centerCoords, opts){
 	var dataAry = [];
 	var dataCoords = [];
 
-	var l = dataSet.length;
+	// var l = dataSet.length;
+	var l = dataSet;
 
 	var angleDegrees = 360 / l;
 	var angleRadians = Math.radians(angleDegrees);
 
 	var r = opts.r || 10;
 	
-	var guideColor = opts.guideColor || 'green';
+	var guideColor = opts.guideColor || '#00800040';
 	var centerR = opts.centerR || 5;
 	var innerR  = opts.innerR || 50;
 	var outerR  = opts.outerR || 75;
@@ -66,7 +67,7 @@ function Crop(name, dataSet, centerCoords, opts){
 	var radius = r;
 
 	if(showGuides)
-		dataAry.push({ cx:center.x, cy:center.y, r:centerR, stroke:guideColor, fill: 'transparent' })
+		// dataAry.push({ cx:center.x, cy:center.y, r:centerR, stroke:guideColor, fill: 'transparent' })
 		dataAry.push({ cx:center.x, cy:center.y, r:innerR, stroke:guideColor, fill: 'transparent' })
 		dataAry.push({ cx:center.x, cy:center.y, r:outerR, stroke:guideColor, fill: 'transparent' })
 
