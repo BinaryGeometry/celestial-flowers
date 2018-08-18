@@ -25,6 +25,58 @@
 				<div id="garden" style="width:240px; border:1px solid #f7f4f0; height:240px;">
 				</div>
 
+				<?php /* options */
+					$summer = function(){
+						
+						$dreaming = [
+							[ #5
+							'id' => 5,
+							'task' => 'Clearing the house',
+							'icon' => 'fal fa-house',
+							'endpoint' => 'https://themodernsquat.xyz',
+							'options' => []
+							],
+							[ #6
+							'id' => 6,
+							'task' => 'Finding a parking place',
+							'icon' => 'fal fa-parking',
+							'endpoint' => 'https://themodernsquat.xyz',
+							'options' => []
+							]
+						];
+
+						$digging = [
+							[ #7
+								'id' => 7,
+								'task' => 'Running an off grid home offce',
+								'icon' => 'fal fa-solar',
+								'endpoint' => 'https://themodernsquat.xyz',
+								'options' => []
+							],
+							[ #8
+								'id' => 8,
+								'task' => 'Commisioning a driver',
+								'icon' => 'fal fa-driver',
+								'endpoint' => 'https://themodernsquat.xyz',
+								'options' => []
+							],
+							[ #9
+								'id' => 9,
+								'task' => 'Settling down for the winter',
+								'icon' => 'fal fa-winter',
+								'endpoint' => 'https://themodernsquat.xyz/',
+								'options' => []
+							]
+						];
+
+												
+						$menus = array_merge($dreaming, $digging);
+						return $menus;
+					};
+
+					print_r($summer);
+				?>
+
 				<a href="#" class="click" data-splice="1">01</a>
 				<a href="#" class="click" data-splice="2">02</a>
 				<a href="#" class="click" data-splice="3">03</a>
