@@ -29,56 +29,84 @@ function repaintGraph(e) {
 		, svg)
 }
 
+		
+var Field = function(plot, configObj){
 
-		// page specific code goes here
+	this.initial = configObj.opts;
+	// this.opts = configObj.opts;
+	this.crop;
 
-		var field = d3.select('#garden')
-		  .append('svg')
-		  .attr('width', width)
-		  .attr('height', height);
+	this.centerNode = configObj.centerNode
 
-		var centerNode = {cx:120, cy:120};
+	this.field = d3.select(plot)
+	  .append('svg')
+	  .attr('width', width)
+	  .attr('height', height);
+	// page specific code goes here
 
-		var opts = {
-			// points: 20,
-			// radius: 10,
-			// r: 10,
-			// guideColor: 'green',
-			// centerR: 5,
-			// innerR: 50,
-			// outerR: 75,
-			// showGuides: true,
-			// fill: 'transparent',
-			// stroke 'green'
-			// ,
-			// colors: ['blue','purple','pink', 'electricpink']
-		}
+	this.sow = function(){
 
-		// plant(crop('peas', hours['six'], {cx:100, cy:100}), svg2);
+		this.crop = new Crop('peas', 4, centerNode, this.opts);
 
-		// new Field()
-		var crop = new Crop('peas', 4, centerNode, opts);
-		plant(crop, field);
+		plant(this.crop, this.field);
+	}
 
-		// UI controller actions
-		$('.click').on('click', function(e){
+	this.plough = function(peas, dataID, centerNode, opts){
 
-			e.preventDefault();
+		this.crop = new Crop(peas, dataID, centerNode, opts);
 
-			var $t = $(this);
+		plant(this.crop, this.field);
+	}
+}
 
-			var dataID = $t.attr('data-splice');
+// plant(crop('peas', hours['six'], {cx:100, cy:100}), svg2);
+var centerNode = {cx:120, cy:120};
 
-			var crop = new Crop('peas', dataID, centerNode, opts);
+var opts = {
+	// points: 20,
+	// radius: 10,
+	// r: 10,
+	// guideColor: 'green',
+	// centerR: 5,
+	// innerR: 50,
+	// outerR: 75,
+	// showGuides: true,
+	// fill: 'transparent',
+	// stroke 'green'
+	// ,
+	// colors: ['blue','purple','pink', 'electricpink']
+}
 
-			plant(crop, field);
+let seedingPlan = {
+	centerNode: centerNode,
+	opts: opts
+}
 
-			$('.click.active').removeClass('active');
-			$t.addClass('active');
-		});
+var field = new Field('#garden', seedingPlan);
+// 
+field.sow();
 
-		// $('.color').on('click', updatePattern);
-		/*
-		// clock.begin(4);
-		*/
-		// var ami = new robot('ami');
+// var crop = new Crop('peas', 4, centerNode, opts);
+
+// plant(crop, field);
+
+// UI controller actions
+$('.click').on('click', function(e){
+
+	e.preventDefault();
+
+	var $t = $(this);
+
+	var dataID = $t.attr('data-splice');
+ 
+	field.plough('peas', dataID, centerNode);
+
+	$('.click.active').removeClass('active');
+	$t.addClass('active');
+});
+
+// $('.color').on('click', updatePattern);
+/*
+// clock.begin(4);
+*/
+// var ami = new robot('ami');
