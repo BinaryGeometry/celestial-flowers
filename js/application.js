@@ -34,45 +34,60 @@ function plant(seeds, plot) {
 	u.exit().remove();
 }
 
+// http://tobyho.com/2010/11/22/javascript-constructors-and/
 function Crop(name, dataSet, centerCoords, opts){
 
-	var name    = name;
-	var dataSet = dataSet;
-	var centerCoords  = centerCoords;
+	console.log('sdf', opts);
 
-	var dataAry = [];
-	var dataCoords = [];
+	this.name    = (typeof name === undefined) ? 'peas' : name;
+	this.dataSet = dataSet;
+	this.centerCoords  = (typeof centerCoords === undefined) ? '{cx:120, cy:120}' : centerCoords;
 
-	// var l = dataSet.length;
-	var l = dataSet;
+	this.dataAry = [];
 
-	var angleDegrees = 360 / l;
-	var angleRadians = Math.radians(angleDegrees);
+	this.l = (typeof optionalArg === undefined) ? 6 : this.dataSet.length;
 
-	var r = opts.r || 10;
-	
-	var guideColor = opts.guideColor || '#00800040';
-	var centerR = opts.centerR || 5;
-	var innerR  = opts.innerR || 50;
-	var outerR  = opts.outerR || 75;
+	this.angleDegrees = 360 / this.l;
+	this.angleRadians = Math.radians(this.angleDegrees);
 
-	var showGuides = opts.showGuides || true;
+	this.r = opts.r;
 
-	var stroke = opts.stroke || 'green';
-	var fill = opts.fill || 'transparent';
-	var colors = opts.colors || ['green','gold','red','blue','purple','pink','lightgreen','orange','darkred','darkgreen','magenta','electricpink'];
+	this.guideColor = opts.guideColor;
+	this.centerR = opts.centerR;
+	this.innerR  = opts.innerR;
+	this.outerR  = opts.outerR;
 
-	var center = {x: centerCoords.cx, y: centerCoords.cy};
-	var points = l;
-	var radius = r;
+	this.showGuides = opts.showGuides;
 
-	if(showGuides)
+	this.stroke = opts.stroke;
+	this.fill = opts.fill;
+	this.colors = opts.colors;
+
+	/* 
+	None of the opts where optinional
+	this.guideColor = (typeof opts.guideColor === undefined) ? '#00800040' : opts.guideColor;
+	this.centerR = (typeof opts.centerR === undefined) ? 5 : opts.centerR;
+	this.innerR  = (typeof opts.innerR === undefined) ? 50 : opts.innerR;
+	this.outerR  = (typeof opts.outerR === undefined) ? 75 : opts.outerR;
+
+	this.showGuides = (typeof opts.showGuides === undefined) ? true : opts.showGuides;
+
+	this.stroke = (typeof opts.stroke === undefined) ? 'green' : opts.stroke;
+	this.fill = (typeof opts.fill === undefined) ? 'transparent' : opts.fill;
+	this.colors = (typeof opts.colors === undefined) ? ['green','gold','red','blue','purple','pink','lightgreen','orange','darkred','darkgreen','magenta','electricpink'] : opts.colors;
+	*/
+
+	this.center = {x: this.centerCoords.cx, y: this.centerCoords.cy};
+	this.points = this.l;
+	this.radius = this.r;
+
+	if(this.showGuides)
 		// dataAry.push({ cx:center.x, cy:center.y, r:centerR, stroke:guideColor, fill: 'transparent' })
-		dataAry.push({ cx:center.x, cy:center.y, r:innerR, stroke:guideColor, fill: 'transparent' })
-		dataAry.push({ cx:center.x, cy:center.y, r:outerR, stroke:guideColor, fill: 'transparent' })
+		this.dataAry.push({ cx:this.center.x, cy:this.center.y, r:this.innerR, stroke:this.guideColor, fill: 'transparent' })
+		this.dataAry.push({ cx:this.center.x, cy:this.center.y, r:this.outerR, stroke:this.guideColor, fill: 'transparent' })
 
-	function drawCirclePoints(points, radius, center){
-		var datanodes = []
+	this.drawCirclePoints = function(points, radius, center){
+		let datanodes = []
 		let slice = 2 * Math.PI / points
 		for (var i = points - 1; i >= 0; i--) {
 			let zangle = slice * i
@@ -82,18 +97,18 @@ function Crop(name, dataSet, centerCoords, opts){
 			var rrrr = centerRspiral(centerR, i, 'r+(i*i)');
 			// let point = {cx: newX, cy: newY, r:centerR, stroke:'green', fill: 'transparent' }
 			let point = {cx: newX, cy: newY, r:rrrr, stroke:'green', fill: 'transparent' }
-			console.log(point)
+			// console.log(point)
 			datanodes.push(point)
-			dataAry.push(point)
+			this.dataAry.push(point)
 		}
-		console.log('nodes', datanodes)
+		// console.log('nodes', datanodes)
 		return datanodes;
 	}
 
-	function centerRspiral(r, i, toEval){
+	this.centerRspiral = function(r, i, toEval){
 
-		var r = r;
-		var i = i;
+		var r = this.r;
+		var i = this.i;
 
 		console.log(r * 1);
 
@@ -103,7 +118,7 @@ function Crop(name, dataSet, centerCoords, opts){
 		// return eval(toEval);
 	}
 
-	drawCirclePoints (points, radius, center)
+	this.drawCirclePoints (this.points, this.radius, this.center)
 	
-	return dataAry;
+	return this.dataAry;
 }

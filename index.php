@@ -22,12 +22,13 @@
 		<div class="col-sm-12">
 			<section class="snwb-widget snwb-screensaver">
 			<center>
-				<div id="garden" style="width:240px; border:1px solid #f7f4f0; height:240px;">
-				</div>
-
 				<?php /* options */
+					$summerClass = 'summer_class';
+
 					$summer = function(){
-						
+
+						$summerClass = 'summer-class';
+
 						$dreaming = [
 							[ #5
 							'id' => 5,
@@ -44,7 +45,6 @@
 							'options' => []
 							]
 						];
-
 						$digging = [
 							[ #7
 								'id' => 7,
@@ -68,34 +68,34 @@
 								'options' => []
 							]
 						];
-
-												
 						$menus = array_merge($dreaming, $digging);
 						return $menus;
 					};
-
-					print_r($summer);
 				?>
 
+				<!-- <h3>How many items to show?</h3> -->
+				<?php foreach ($summer() as $item): ?>
+					<a href="#" class="<?= $summerClass; ?>" data-noItems="<?= $item['id']; ?>"><?= $item['id']; ?></a>
+				<?php endforeach ?>
+				<div id="garden" style="width:240px; border:1px solid #f7f4f0; height:240px;">
+				</div>
+				
 				<a href="#" class="click" data-splice="1">01</a>
 				<a href="#" class="click" data-splice="2">02</a>
 				<a href="#" class="click" data-splice="3">03</a>
 				<a href="#" class="click active" data-splice="4">04</a>
 				<a href="#" class="click" data-splice="5">05</a>
 				<a href="#" class="click" data-splice="6">06</a>
-
 				<a href="#" class="click" data-splice="7">07</a>
 				<a href="#" class="click" data-splice="8">08</a>
 				<a href="#" class="click" data-splice="9">09</a>
 				<a href="#" class="click" data-splice="10">10</a>
 				<a href="#" class="click" data-splice="11">11</a>
 				<a href="#" class="click" data-splice="12">12</a>
-
 				<a href="#" class="color" data-splice="red" style="background:red;">**</a>
 				<a href="#" class="color" data-splice="gold" style="background:gold;">**</a>
 				<a href="#" class="color active" data-splice="blue" style="background:blue;">**</a>
 				<a href="#" class="color" data-splice="green" style="background:green;">**</a>
-
 				</center>
 			</section>
 
@@ -124,7 +124,12 @@
 		create signup -->
 	</form>
 	*/ ?>
-
+	<h2></h2>
+	<script>
+		
+		var GLOBAL_summer_class = '<?= $summerClass; ?>';
+		
+	</script>
 	<script src="http://make.something/js/data.js"></script>
 	<script src="http://make.something/js/library.js"></script>
 	<script src="http://make.something/js/application.js"></script>

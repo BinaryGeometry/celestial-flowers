@@ -29,6 +29,30 @@ function repaintGraph(e) {
 		, svg)
 }
 
+
+// plant(crop('peas', hours['six'], {cx:100, cy:100}), svg2);
+var centerNode = {cx:120, cy:120};
+
+var opts = {
+	points: 20,
+	radius: 10,
+	r: 10,
+	guideColor: 'green',
+	centerR: 5,
+	innerR: 50,
+	outerR: 75,
+	showGuides: true,
+	fill: 'transparent',
+	stroke: 'green',
+	colors: ['blue','purple','pink', 'electricpink']
+}
+
+let seedingPlan = {
+	centerNode: centerNode,
+	opts: opts
+}
+
+let configObj = opts;
 		
 var Field = function(plot, configObj){
 
@@ -46,7 +70,7 @@ var Field = function(plot, configObj){
 
 	this.sow = function(){
 
-		this.crop = new Crop('peas', 4, centerNode, this.opts);
+		this.crop = new Crop('peas', 4, centerNode, this.initial);
 
 		plant(this.crop, this.field);
 	}
@@ -57,29 +81,6 @@ var Field = function(plot, configObj){
 
 		plant(this.crop, this.field);
 	}
-}
-
-// plant(crop('peas', hours['six'], {cx:100, cy:100}), svg2);
-var centerNode = {cx:120, cy:120};
-
-var opts = {
-	// points: 20,
-	// radius: 10,
-	// r: 10,
-	// guideColor: 'green',
-	// centerR: 5,
-	// innerR: 50,
-	// outerR: 75,
-	// showGuides: true,
-	// fill: 'transparent',
-	// stroke 'green'
-	// ,
-	// colors: ['blue','purple','pink', 'electricpink']
-}
-
-let seedingPlan = {
-	centerNode: centerNode,
-	opts: opts
 }
 
 var field = new Field('#garden', seedingPlan);
@@ -103,6 +104,20 @@ $('.click').on('click', function(e){
 
 	$('.click.active').removeClass('active');
 	$t.addClass('active');
+});
+
+$('.'.GLOBAL_summer_class).on('click', function(e){
+	console.log('clocick')
+	// e.preventDefault();
+
+	// var $t = $(this);
+
+	// var dataID = $t.attr('data-noItems');
+ 
+	// field.plough('peas', dataID, centerNode);
+
+	// $('.click.active').removeClass('active');
+	// $t.addClass('active');
 });
 
 // $('.color').on('click', updatePattern);
