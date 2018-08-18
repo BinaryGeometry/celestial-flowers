@@ -37,7 +37,7 @@ var opts = {
 	points: 20,
 	radius: 10,
 	r: 10,
-	guideColor: 'green',
+	guideColor: '#00800040',
 	centerR: 5,
 	innerR: 50,
 	outerR: 75,

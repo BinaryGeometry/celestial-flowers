@@ -42,6 +42,9 @@ function Crop(name, dataSet, centerCoords, opts){
 	this.name    = (typeof name === undefined) ? 'peas' : name;
 	this.dataSet = dataSet;
 	this.centerCoords  = (typeof centerCoords === undefined) ? '{cx:120, cy:120}' : centerCoords;
+	this.opts = (typeof opts === undefined) : new Object ? opts
+	
+	console.log(opts);
 
 	this.dataAry = [];
 
