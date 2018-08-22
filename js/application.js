@@ -133,7 +133,7 @@ console.log('d', this.center)
 			let newX = center.x + radius * Math.cos(zangle)
 			let newY = center.y + radius * Math.sin(zangle)
 			// var rrrr = centerRspiral(centerR, i, 'r+(r*1.5-r)');
-			var rrrr = centerRspiral(_that.centerR, i, 'r+(i*i)');
+			var rrrr = 10; //centerRspiral(10, i, 'r+(i*i)');
 			// let point = {cx: newX, cy: newY, r:centerR, stroke:'green', fill: 'transparent' }
 			let point = {cx: newX, cy: newY, r:rrrr, stroke:'green', fill: 'transparent' }
 			// console.log(point)
@@ -149,11 +149,9 @@ console.log('d', this.center)
 	 * @param toEval - a string which maniplates the starting r and i values  
 	*/
 	function centerRspiral(r, i, toEval){
-
 		var r = this.r;
 		var i = this.i;
-
-		console.log(r * 1);
+		console.log('sdfsdfsdf', r * 1);
 
 		// return r * i;
 		// return r;
