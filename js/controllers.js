@@ -33,6 +33,23 @@ function repaintGraph(e) {
 // plant(crop('peas', hours['six'], {cx:100, cy:100}), svg2);
 var centerNode = {cx:120, cy:120};
 
+var defaults = {
+	// Required
+	this.name: 'peas',
+	dataSet: dataSet,
+	centerCoords: '{cx:120, cy:120}',
+	// Optional
+	guideColor: '#00800040',
+	r: 10,
+	centerR: 5,
+	innerR: 50,
+	outerR: 75,
+	showGuides: true,
+	stroke: 'green',
+	fill: 'transparent',
+	colors: ['green','gold','red','blue','purple','pink','lightgreen','orange','darkred','darkgreen','magenta','electricpink'],
+}
+
 var opts = {
 	points: 20,
 	radius: 10,
@@ -53,7 +70,7 @@ let seedingPlan = {
 }
 
 let configObj = opts;
-		
+
 var Field = function(plot, configObj){
 
 	this.initial = configObj.opts;

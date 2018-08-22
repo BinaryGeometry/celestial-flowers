@@ -35,60 +35,82 @@ function plant(seeds, plot) {
 }
 
 // http://tobyho.com/2010/11/22/javascript-constructors-and/
-function Crop(name, dataSet, centerCoords, opts){
+// function Crop(name, dataSet, centerCoords, opts){
+function Crop(dataSet, go){
 
-	console.log('sdf', opts);
 
-	this.name    = (typeof name === undefined) ? 'peas' : name;
-	this.dataSet = dataSet;
-	this.centerCoords  = (typeof centerCoords === undefined) ? '{cx:120, cy:120}' : centerCoords;
-	this.opts = (typeof opts === undefined) : new Object ? opts
+	var defaults = {
+		// Required
+		this.name: 'peas',
+		dataSet = dataSet;
+		centerCoords: '{cx:120, cy:120}',
+		// Optional
+		guideColor: '#00800040',
+		r: 10,
+		centerR: 5,
+		innerR: 50,
+		outerR: 75,
+		showGuides: true,
+		stroke: 'green',
+		fill: 'transparent',
+		colors: ['green','gold','red','blue','purple','pink','lightgreen','orange','darkred','darkgreen','magenta','electricpink'],
+	}
+
+	if (typeof go !== "object") go = [];
+	for(var i in defaults)
+		if(typeof go[i] == "undefined") 
+			go[i] = defaults[i];
 	
-	console.log(opts);
-
+	// storage variables
 	this.dataAry = [];
 
-	this.l = (typeof optionalArg === undefined) ? 6 : this.dataSet.length;
+	// definded variables
+	this.dataSet = dataSet;
+	this.opts = go;
 
+	// config variables
+	this.name = this.opts.name
+	this.centerCoords  = this.opts.centerCoords;
+
+	// math variables
+	this.l = this.dataSet.length;
 	this.angleDegrees = 360 / this.l;
 	this.angleRadians = Math.radians(this.angleDegrees);
 
-	this.r = opts.r;
+	this.r = this.opts.r;
+	this.guideColor = this.opts.guideColor;
+	this.centerR = this.opts.centerR;
+	this.innerR  = this.opts.innerR;
+	this.outerR  = this.opts.outerR;
 
-	this.guideColor = opts.guideColor;
-	this.centerR = opts.centerR;
-	this.innerR  = opts.innerR;
-	this.outerR  = opts.outerR;
+	this.showGuides = this.opts.showGuides;
 
-	this.showGuides = opts.showGuides;
+	this.stroke = this.opts.stroke;
+	this.fill = this.opts.fill;
+	this.colors = this.opts.colors;
 
-	this.stroke = opts.stroke;
-	this.fill = opts.fill;
-	this.colors = opts.colors;
-
-	/* 
-	None of the opts where optinional
-	this.guideColor = (typeof opts.guideColor === undefined) ? '#00800040' : opts.guideColor;
-	this.centerR = (typeof opts.centerR === undefined) ? 5 : opts.centerR;
-	this.innerR  = (typeof opts.innerR === undefined) ? 50 : opts.innerR;
-	this.outerR  = (typeof opts.outerR === undefined) ? 75 : opts.outerR;
-
-	this.showGuides = (typeof opts.showGuides === undefined) ? true : opts.showGuides;
-
-	this.stroke = (typeof opts.stroke === undefined) ? 'green' : opts.stroke;
-	this.fill = (typeof opts.fill === undefined) ? 'transparent' : opts.fill;
-	this.colors = (typeof opts.colors === undefined) ? ['green','gold','red','blue','purple','pink','lightgreen','orange','darkred','darkgreen','magenta','electricpink'] : opts.colors;
-	*/
-
+	// totod
 	this.center = {x: this.centerCoords.cx, y: this.centerCoords.cy};
 	this.points = this.l;
 	this.radius = this.r;
 
+	// some hardcoded guidlines added to the array of data nodes
 	if(this.showGuides)
 		// dataAry.push({ cx:center.x, cy:center.y, r:centerR, stroke:guideColor, fill: 'transparent' })
 		this.dataAry.push({ cx:this.center.x, cy:this.center.y, r:this.innerR, stroke:this.guideColor, fill: 'transparent' })
 		this.dataAry.push({ cx:this.center.x, cy:this.center.y, r:this.outerR, stroke:this.guideColor, fill: 'transparent' })
 
+
+	// lets call a function strait of the bat
+	this.drawCirclePoints (this.points, this.radius, this.center)
+
+	// Return an array of nodes to be consumed by our d3 tracktor
+	// should the return statement be after the function definitions
+	return this.dataAry;
+
+	/*
+	 * @param points - the number of things i don't understand
+	*/
 	this.drawCirclePoints = function(points, radius, center){
 		let datanodes = []
 		let slice = 2 * Math.PI / points
@@ -108,6 +130,9 @@ function Crop(name, dataSet, centerCoords, opts){
 		return datanodes;
 	}
 
+	/*
+	 * @param toEval - a string which maniplates the starting r and i values  
+	*/
 	this.centerRspiral = function(r, i, toEval){
 
 		var r = this.r;
@@ -121,7 +146,4 @@ function Crop(name, dataSet, centerCoords, opts){
 		// return eval(toEval);
 	}
 
-	this.drawCirclePoints (this.points, this.radius, this.center)
-	
-	return this.dataAry;
 }

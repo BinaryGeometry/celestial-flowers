@@ -134,7 +134,6 @@
 	<script src="http://make.something/js/library.js"></script>
 	<script src="http://make.something/js/application.js"></script>
 	<script src="http://make.something/js/controllers.js"></script>
-	<!-- <script></script> -->
 
 </body>
 </html>
