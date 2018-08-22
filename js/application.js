@@ -36,13 +36,12 @@ function plant(seeds, plot) {
 
 // http://tobyho.com/2010/11/22/javascript-constructors-and/
 // function Crop(name, dataSet, centerCoords, opts){
-function Crop(dataSet, go){
-
+var Crop = function(dataSet, go){
 
 	var defaults = {
 		// Required
-		this.name: 'peas',
-		dataSet = dataSet;
+		name: 'peas',
+		dataSet: dataSet,
 		centerCoords: '{cx:120, cy:120}',
 		// Optional
 		guideColor: '#00800040',
@@ -102,16 +101,18 @@ function Crop(dataSet, go){
 
 
 	// lets call a function strait of the bat
-	this.drawCirclePoints (this.points, this.radius, this.center)
+	drawCirclePoints (this.points, this.radius, this.center)
 
 	// Return an array of nodes to be consumed by our d3 tracktor
 	// should the return statement be after the function definitions
 	return this.dataAry;
 
 	/*
+	 * private
 	 * @param points - the number of things i don't understand
 	*/
-	this.drawCirclePoints = function(points, radius, center){
+	function drawCirclePoints(points, radius, center){
+	// this.drawCirclePoints = function(points, radius, center){
 		let datanodes = []
 		let slice = 2 * Math.PI / points
 		for (var i = points - 1; i >= 0; i--) {
@@ -147,3 +148,41 @@ function Crop(dataSet, go){
 	}
 
 }
+
+var Field = function(plot, configObj){
+
+	this.initialPlantingInstructions = configObj;
+	this.currentPlantingInstructions = this.initialPlantingInstructions;
+	
+	this.currentCrop;
+
+	this.field = d3.select(plot)
+		.append('svg')
+		.attr('width', width)
+		.attr('height', height);
+
+	/*
+	 * private method
+	 */
+	this.plant = function(){
+		// this.crop = new Crop('peas', 4, centerNode, this.initial);
+		this.currentCrop = new Crop(this.currentPlantingInstructions);
+
+		// call d3 and update the page
+		plant(this.currentCrop, this.field);
+	}
+
+	/*
+	 * public method
+	 * @param plantingInstructions - a config object for the Crop constructor function 
+	 */
+	this.rePlant = function(plantingInstructions){
+		this.currentPlantingInstructions = plantingInstructions;
+		this.plant();
+	}
+
+	// // // //
+	// plant the field to the inital seedingPlan
+	this.plant();
+}
+

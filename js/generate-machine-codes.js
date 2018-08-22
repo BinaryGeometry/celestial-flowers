@@ -21,3 +21,6 @@ function robot(iAm){
     	whatAmI : this.whatAmI
     }
 }
+
+
+// var ami = new robot('ami');

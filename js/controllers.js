@@ -1,56 +1,20 @@
-// bindable functions dependant on application.js
 
-function colorGraph(e) {
-
-	e.preventDefault();
-	var $t = $(this);
-	var color = $t.attr('data-splice');
-	$('.color.active').removeClass('active');
-	$t.addClass('active');
-	console.log('dsf', color);
-	// .duration(1000).attr('width', 250);
-	// path.transition
-}
-
-function repaintGraph(e) {
-
-	e.preventDefault();
-
-	var $t = $(this);
-
-	var dataID = $t.attr('data-splice');
-
-	var dataset = data[dataID];
-
-	$('.click.active').removeClass('active');
-	$t.addClass('active');
-	
-	piez(pie(dataset)
-		, svg)
-}
-
+var fieldData = [
+  { label: 'Bang Hai', count: 20 },
+  { label: 'Lions den', count: 20 },
+  { label: 'Uptown', count: 20 },
+  { label: 'Robotika', count: 20 },
+  { label: 'Town Hall', count: 20 },
+  { label: 'Sector 6', count: 20 }
+];
 
 // plant(crop('peas', hours['six'], {cx:100, cy:100}), svg2);
 var centerNode = {cx:120, cy:120};
 
-var defaults = {
-	// Required
-	this.name: 'peas',
-	dataSet: dataSet,
-	centerCoords: '{cx:120, cy:120}',
-	// Optional
-	guideColor: '#00800040',
-	r: 10,
-	centerR: 5,
-	innerR: 50,
-	outerR: 75,
-	showGuides: true,
-	stroke: 'green',
-	fill: 'transparent',
-	colors: ['green','gold','red','blue','purple','pink','lightgreen','orange','darkred','darkgreen','magenta','electricpink'],
-}
-
 var opts = {
+	name: 'peas',
+	dataSet: fieldData,
+	centerCoords: '{cx:120, cy:120}',
 	points: 20,
 	radius: 10,
 	r: 10,
@@ -71,38 +35,8 @@ let seedingPlan = {
 
 let configObj = opts;
 
-var Field = function(plot, configObj){
-
-	this.initial = configObj.opts;
-	// this.opts = configObj.opts;
-	this.crop;
-
-	this.centerNode = configObj.centerNode
-
-	this.field = d3.select(plot)
-	  .append('svg')
-	  .attr('width', width)
-	  .attr('height', height);
-	// page specific code goes here
-
-	this.sow = function(){
-
-		this.crop = new Crop('peas', 4, centerNode, this.initial);
-
-		plant(this.crop, this.field);
-	}
-
-	this.plough = function(peas, dataID, centerNode, opts){
-
-		this.crop = new Crop(peas, dataID, centerNode, opts);
-
-		plant(this.crop, this.field);
-	}
-}
-
 var field = new Field('#garden', seedingPlan);
-// 
-field.sow();
+
 
 // var crop = new Crop('peas', 4, centerNode, opts);
 
@@ -137,8 +71,34 @@ $('.'.GLOBAL_summer_class).on('click', function(e){
 	// $t.addClass('active');
 });
 
-// $('.color').on('click', updatePattern);
-/*
-// clock.begin(4);
-*/
-// var ami = new robot('ami');
+// bindable functions dependant on application.js
+
+function colorGraph(e) {
+
+	e.preventDefault();
+	var $t = $(this);
+	var color = $t.attr('data-splice');
+	$('.color.active').removeClass('active');
+	$t.addClass('active');
+	console.log('dsf', color);
+	// .duration(1000).attr('width', 250);
+	// path.transition
+}
+
+function repaintGraph(e) {
+
+	e.preventDefault();
+
+	var $t = $(this);
+
+	var dataID = $t.attr('data-splice');
+
+	var dataset = data[dataID];
+
+	$('.click.active').removeClass('active');
+	$t.addClass('active');
+	
+	piez(pie(fieldData)
+		, svg)
+}
+
