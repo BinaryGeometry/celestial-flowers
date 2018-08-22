@@ -11,7 +11,7 @@ var fieldData = [
 var opts = {
 	name: 'peas',
 	dataSet: fieldData,
-	centerCoords: '{cx:120, cy:120}',
+	centerCoords: {cx:120, cy:120},
 	points: 20,
 	radius: 10,
 	r: 10,

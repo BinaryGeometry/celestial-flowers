@@ -18,10 +18,11 @@ var pie = d3.pie()
 // var path = svg.selectAll('g')
 //   .data(pie(dataset));
 
-function plant(seeds, plot) {
-
+/* 
+ * replaint specific d3 svg with new pattern of data nodes
+ */
+function ploughPlotSowAndWater(seeds, plot) {
 	console.log('planting seeds to grow', seeds, ', on plot ', plot);
-	
 	var u = plot
 		.selectAll("circle")
 		.data(seeds);
@@ -39,13 +40,15 @@ function plant(seeds, plot) {
 
 // http://tobyho.com/2010/11/22/javascript-constructors-and/
 // function Crop(name, dataSet, centerCoords, opts){
-var Crop = function(dataSet, go){
 
+var Crop = function(go){
+
+	let _that = this;
+	
 	var defaults = {
 		// Required
 		name: 'peas',
-		dataSet: dataSet,
-		centerCoords: '{cx:120, cy:120}',
+		centerCoords: {cx:120, cy:120},
 		// Optional
 		guideColor: '#00800040',
 		r: 10,
@@ -58,6 +61,7 @@ var Crop = function(dataSet, go){
 		colors: ['green','gold','red','blue','purple','pink','lightgreen','orange','darkred','darkgreen','magenta','electricpink'],
 	}
 
+	console.log
 	if (typeof go !== "object") go = [];
 	for(var i in defaults)
 		if(typeof go[i] == "undefined") 
@@ -66,13 +70,13 @@ var Crop = function(dataSet, go){
 	// storage variables
 	this.dataAry = [];
 
-	// definded variables
-	this.dataSet = dataSet;
+	// defended variables
 	this.opts = go;
 
 	// config variables
 	this.name = this.opts.name
 	this.centerCoords  = this.opts.centerCoords;
+	this.dataSet = this.opts.dataSet;
 
 	// math variables
 	this.l = this.dataSet.length;
@@ -92,7 +96,11 @@ var Crop = function(dataSet, go){
 	this.colors = this.opts.colors;
 
 	// totod
-	this.center = {x: this.centerCoords.cx, y: this.centerCoords.cy};
+	this.center = {
+		x: this.centerCoords.cx, 
+		y: this.centerCoords.cy
+	};
+console.log('d', this.center)
 	this.points = this.l;
 	this.radius = this.r;
 
@@ -102,9 +110,10 @@ var Crop = function(dataSet, go){
 		this.dataAry.push({ cx:this.center.x, cy:this.center.y, r:this.innerR, stroke:this.guideColor, fill: 'transparent' })
 		this.dataAry.push({ cx:this.center.x, cy:this.center.y, r:this.outerR, stroke:this.guideColor, fill: 'transparent' })
 
-
 	// lets call a function strait of the bat
-	drawCirclePoints (this.points, this.radius, this.center)
+	let seedingPlan = drawCirclePoints(this.points, this.radius, this.center)
+
+	this.dataAry.push(seedingPlan);
 
 	// Return an array of nodes to be consumed by our d3 tracktor
 	// should the return statement be after the function definitions
@@ -112,9 +121,10 @@ var Crop = function(dataSet, go){
 
 	/*
 	 * private
-	 * @param points - the number of things i don't understand
+	 * @param points - the number of data nodes
 	*/
 	function drawCirclePoints(points, radius, center){
+		console.log('dcp', points, radius, center)
 		// this.drawCirclePoints = function(points, radius, center){
 		let datanodes = []
 		let slice = 2 * Math.PI / points
@@ -123,21 +133,22 @@ var Crop = function(dataSet, go){
 			let newX = center.x + radius * Math.cos(zangle)
 			let newY = center.y + radius * Math.sin(zangle)
 			// var rrrr = centerRspiral(centerR, i, 'r+(r*1.5-r)');
-			var rrrr = centerRspiral(centerR, i, 'r+(i*i)');
+			var rrrr = centerRspiral(_that.centerR, i, 'r+(i*i)');
 			// let point = {cx: newX, cy: newY, r:centerR, stroke:'green', fill: 'transparent' }
 			let point = {cx: newX, cy: newY, r:rrrr, stroke:'green', fill: 'transparent' }
 			// console.log(point)
 			datanodes.push(point)
-			this.dataAry.push(point)
+			// this.dataAry.push(point)
 		}
 		// console.log('nodes', datanodes)
 		return datanodes;
 	}
 
 	/*
+	 * private
 	 * @param toEval - a string which maniplates the starting r and i values  
 	*/
-	this.centerRspiral = function(r, i, toEval){
+	function centerRspiral(r, i, toEval){
 
 		var r = this.r;
 		var i = this.i;
@@ -171,7 +182,7 @@ var Field = function(plot, configObj){
 		this.currentCrop = new Crop(this.currentPlantingInstructions);
 
 		// call d3 and update the page
-		plant(this.currentCrop, this.field);
+		ploughPlotSowAndWater(this.currentCrop, this.field);
 	}
 
 	/*
@@ -187,4 +198,3 @@ var Field = function(plot, configObj){
 	// plant the field to the inital seedingPlan
 	this.plant();
 }
-
