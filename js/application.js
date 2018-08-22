@@ -19,6 +19,9 @@ var pie = d3.pie()
 //   .data(pie(dataset));
 
 function plant(seeds, plot) {
+
+	console.log('planting seeds to grow', seeds, ', on plot ', plot);
+	
 	var u = plot
 		.selectAll("circle")
 		.data(seeds);
@@ -112,7 +115,7 @@ var Crop = function(dataSet, go){
 	 * @param points - the number of things i don't understand
 	*/
 	function drawCirclePoints(points, radius, center){
-	// this.drawCirclePoints = function(points, radius, center){
+		// this.drawCirclePoints = function(points, radius, center){
 		let datanodes = []
 		let slice = 2 * Math.PI / points
 		for (var i = points - 1; i >= 0; i--) {
@@ -146,7 +149,6 @@ var Crop = function(dataSet, go){
 		return eval(toEval);
 		// return eval(toEval);
 	}
-
 }
 
 var Field = function(plot, configObj){

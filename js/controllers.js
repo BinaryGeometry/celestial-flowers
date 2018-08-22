@@ -8,9 +8,6 @@ var fieldData = [
   { label: 'Sector 6', count: 20 }
 ];
 
-// plant(crop('peas', hours['six'], {cx:100, cy:100}), svg2);
-var centerNode = {cx:120, cy:120};
-
 var opts = {
 	name: 'peas',
 	dataSet: fieldData,
@@ -28,30 +25,30 @@ var opts = {
 	colors: ['blue','purple','pink', 'electricpink']
 }
 
-let seedingPlan = {
-	centerNode: centerNode,
-	opts: opts
-}
+// let seedingPlan = {
+// 	centerNode: centerNode,
+// 	opts: opts
+// }
+let seedingPlan = opts;
 
-let configObj = opts;
-
-var field = new Field('#garden', seedingPlan);
-
+var leftField = new Field('#garden', seedingPlan);
 
 // var crop = new Crop('peas', 4, centerNode, opts);
 
 // plant(crop, field);
 
 // UI controller actions
-$('.click').on('click', function(e){
-
+$('.click').on('click', function(e){	
 	e.preventDefault();
-
 	var $t = $(this);
-
 	var dataID = $t.attr('data-splice');
- 
-	field.plough('peas', dataID, centerNode);
+
+	// TODO - Field needs method to handle this
+	// seedingPlan.guideColor = 'gold';
+	// seedingPlan.centerCoords = '{cx:220, cy:120}';
+	
+	seedingPlan.r = 20;
+	leftField.rePlant(seedingPlan);
 
 	$('.click.active').removeClass('active');
 	$t.addClass('active');
@@ -60,13 +57,11 @@ $('.click').on('click', function(e){
 $('.'.GLOBAL_summer_class).on('click', function(e){
 	console.log('clocick')
 	// e.preventDefault();
-
 	// var $t = $(this);
-
 	// var dataID = $t.attr('data-noItems');
- 
+	
 	// field.plough('peas', dataID, centerNode);
-
+	
 	// $('.click.active').removeClass('active');
 	// $t.addClass('active');
 });
