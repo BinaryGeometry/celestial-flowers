@@ -95,12 +95,10 @@ var Crop = function(go){
 	this.fill = this.opts.fill;
 	this.colors = this.opts.colors;
 
-	// totod
 	this.center = {
 		x: this.centerCoords.cx, 
 		y: this.centerCoords.cy
 	};
-console.log('d', this.center)
 	this.points = this.l;
 	this.radius = this.r;
 
@@ -113,7 +111,9 @@ console.log('d', this.center)
 	// lets call a function strait of the bat
 	let seedingPlan = drawCirclePoints(this.points, this.radius, this.center)
 
-	this.dataAry.push(seedingPlan);
+	for (var i = seedingPlan.length - 1; i >= 0; i--) {
+		this.dataAry.push(seedingPlan[i]);
+	}
 
 	// Return an array of nodes to be consumed by our d3 tracktor
 	// should the return statement be after the function definitions
